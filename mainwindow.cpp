@@ -6,25 +6,26 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    TileLoader *tileLoader = new TileLoader();
-    TileMap *tileMap = new TileMap(100, 100, tileLoader);
-
+    tileLoader = new TileLoader();
+    tileMap = new TileMap(100, 100, tileLoader);
     QGraphicsScene *scene = new QGraphicsScene(this);
-    foreach (Tile tile, tileMap->getTileList()) {
-        QGraphicsPixmapItem *pixmapItem = new QGraphicsPixmapItem(tile.tileType->getTileImage());
-        pixmapItem->setPos(tile.posX, tile.posY);
-        scene->addItem(pixmapItem);
-    }
 
-    QGraphicsView *view = new QGraphicsView(scene, this);
-    view->setBackgroundBrush(Qt::lightGray);
-    view->setRenderHint(QPainter::Antialiasing);
-    view->setDragMode(QGraphicsView::ScrollHandDrag);
+    tileMap->loadMapIntoScene(scene);
 
-    setCentralWidget(view);
+    ui->graphicsViewMain->setScene(scene);
+    ui->graphicsViewMain->setBackgroundBrush(Qt::lightGray);
+    ui->graphicsViewMain->setRenderHint(QPainter::Antialiasing);
+    //ui->graphicsViewMain->setDragMode(QGraphicsView::ScrollHandDrag);
+
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
 }
+
+void MainWindow::on_pushButtonAddRail_clicked()
+{
+    buildRail = !buildRail;
+}
+

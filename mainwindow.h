@@ -25,7 +25,14 @@ public:
 
 private slots:
 
+    void on_pushButtonAddRail_clicked();
+
 private:
     Ui::MainWindow *ui;
+    TileLoader *tileLoader;
+    TileMap *tileMap;
+
+    // TODO:
+    bool buildRail = false;
 };
 #endif // MAINWINDOW_H

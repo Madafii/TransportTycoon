@@ -7,7 +7,18 @@ TileMap::TileMap(int size_x, int size_y, TileLoader *tileLoader) :
 {
     for (int x = 0; x < size_x; x++) {
         for (int y = 0; y < size_y; y++) {
-            tileList.append(Tile(tileLoader->getTileTypeAt(TILE_TYPE::GRASS), x * 50, y * 50));
+            const TileType *tileType = tileLoader->getTileTypeAt(TILE_TYPE::GRASS);
+            const int size = tileType->getTileImage().height();
+            MapTile *tile = new MapTile(tileType, QRectF(x * size, y * size, size, size));
+            tileList.append(tile);
         }
+    }
+}
+
+void TileMap::loadMapIntoScene(QGraphicsScene *gS) {
+    foreach (MapTile *tile, tileList) {
+        tile->setPos(tile->rect.x(), tile->rect.y());
+        tile->setFlag(QGraphicsItem::ItemIsSelectable);
+        gS->addItem(tile);
     }
 }

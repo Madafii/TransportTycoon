@@ -5,9 +5,9 @@ TileLoader::TileLoader() {
     tileWidth   = 50;
     tileHeight  = 50;
 
-    QString stdFileName = QString(qgetenv("TTEHOME") + "/user/images");
+    QString stdFileName = QString(qgetenv("TTEUSER") + "/images/test.png");
 
-    loadTileImagesFromFile("/home/fpittermann/Documents/TransportTycoon/user/images/test.png");
+    loadTileImagesFromFile(stdFileName);
 }
 
 // TODO: do this later working with default values first
@@ -23,7 +23,7 @@ void TileLoader::loadTileImagesFromFile(QString fileName) {
     QImage image(fileName);
 
     if (image.isNull()) {
-        qDebug() << "Failed to load the image from the file: " << fileName;
+        qCritical() << "Failed to load the image from the file: " << fileName;
         return;
     }
 
@@ -36,8 +36,8 @@ void TileLoader::loadTileImagesFromFile(QString fileName) {
     for (int i = 0; i < imageRect.width()/tileWidth; i++) {
         for (int j = 0; j < imageRect.height()/tileHeight; j++) {
             if (counter < enumSize) {
-                tileTypes.append(TileType(static_cast<TILE_TYPE>(counter),
-                                          QPixmap::fromImage(image.copy(i * tileWidth, j * tileHeight, tileWidth, tileHeight))));
+                QPixmap pixImage = QPixmap::fromImage(image.copy(i * tileWidth, j * tileHeight, tileWidth, tileHeight));
+                tileTypes.append(TileType(static_cast<TILE_TYPE>(counter), pixImage));
             }
             else {
                 qDebug() << "TileLoader: reached end of TileType enums no more TileImages can be loaded from: " << fileName;

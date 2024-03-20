@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/icons">
+        <file>build_rail_icon.jpg</file>
+    </qresource>
+</RCC>

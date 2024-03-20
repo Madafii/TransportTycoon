@@ -8,15 +8,16 @@
 enum TILE_TYPE {
     GRASS = 0,
     RAIL = 1,
-    NONE = 2
+    EXTRA = 2,
+    NONE = 3
 };
 
 class TileType
 {
 public:
-    TileType(TILE_TYPE tileType, QPixmap image);
+    TileType(TILE_TYPE tileType, const QPixmap &image);
     TILE_TYPE getTileType() const { return tileType; }
-    QPixmap getTileImage() const { return tileImage; }
+    const QPixmap getTileImage() const { return tileImage; }
 
 private:
     TILE_TYPE tileType;
