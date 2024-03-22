@@ -4,7 +4,7 @@ add_library(tiles
     tilemap.h tilemap.cpp
     tiletype.h tiletype.cpp
     tileloader.h tileloader.cpp
-    maptile.h maptile.cpp
+    tile.h tile.cpp
 )
 
 target_include_directories(tiles PUBLIC ".")

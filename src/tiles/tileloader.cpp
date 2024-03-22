@@ -36,7 +36,7 @@ void TileLoader::loadTileImagesFromFile(QString fileName) {
     for (int i = 0; i < imageRect.width()/tileWidth; i++) {
         for (int j = 0; j < imageRect.height()/tileHeight; j++) {
             if (counter < enumSize) {
-                QPixmap pixImage = QPixmap::fromImage(image.copy(i * tileWidth, j * tileHeight, tileWidth, tileHeight));
+                QPixmap pixImage = QPixmap::fromImage(image.copy(j * tileWidth, i * tileHeight, tileWidth, tileHeight));
                 tileTypes.append(TileType(static_cast<TILE_TYPE>(counter), pixImage));
             }
             else {

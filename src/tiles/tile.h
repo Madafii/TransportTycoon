@@ -7,16 +7,24 @@
 #include "tiletype.h"
 
 
-class MapTile : public QGraphicsItem
+class Tile : public QGraphicsItem
 {
+
 public:
-    MapTile(const TileType *tileType, QRectF rect);
+    Tile(const TileType *tileType, QRectF rect);
 
     QRectF boundingRect() const override;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
 
     const TileType *tileType;
     QRectF rect;
+
+protected:
+    void hoverEnterEvent(QGraphicsSceneHoverEvent *event) override;
+    //void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
+
+signals:
+    void itemMouseEntered(Tile *tile);
 
 private:
 };

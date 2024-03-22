@@ -7,14 +7,15 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     tileLoader = new TileLoader();
-    tileMap = new TileMap(100, 100, tileLoader);
     QGraphicsScene *scene = new QGraphicsScene(this);
+    tileMap = new TileMap(scene, 100, 100, tileLoader, this);
 
-    tileMap->loadMapIntoScene(scene);
+    tileMap->setObjectName("graphicsViewMain");
 
-    ui->graphicsViewMain->setScene(scene);
-    ui->graphicsViewMain->setBackgroundBrush(Qt::lightGray);
-    ui->graphicsViewMain->setRenderHint(QPainter::Antialiasing);
+    ui->verticalLayout->addWidget(tileMap);
+    tileMap->setScene(scene);
+    tileMap->setBackgroundBrush(Qt::lightGray);
+    tileMap->setRenderHint(QPainter::Antialiasing);
     //ui->graphicsViewMain->setDragMode(QGraphicsView::ScrollHandDrag);
 
 }
@@ -26,6 +27,6 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButtonAddRail_clicked()
 {
-    buildRail = !buildRail;
+    tileMap->setCursorVisible(!tileMap->isCursorVisible());
 }
 

@@ -12,17 +12,23 @@ int main(int argc, char *argv[])
 
     qputenv("TTEUSER", (QFileInfo(__FILE__).absoluteDir().path() + "/user/").toUtf8());
 
-    // Show the Starting Window for Settings
-    StartingWindow startingWindow;
     MainWindow* mainWindow = nullptr;
-    if (startingWindow.exec() != QDialog::Accepted) {
-        return 0;
-    }
-    else {
-        mainWindow = new MainWindow();
-        mainWindow->setWindowTitle("My Application");
-        mainWindow->showMaximized();
-    }
+
+    // Show the Starting Window for Settings
+    // StartingWindow startingWindow;
+    // if (startingWindow.exec() != QDialog::Accepted) {
+    //     return 0;
+    // }
+    // else {
+    //     mainWindow = new MainWindow();
+    //     mainWindow->setWindowTitle("My Application");
+    //     mainWindow->showMaximized();
+    // }
+
+    mainWindow = new MainWindow();
+    mainWindow->setWindowTitle("My Application");
+    mainWindow->show();
+    //mainWindow->showMaximized();
 
     int result = app.exec();
 
