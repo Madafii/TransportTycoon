@@ -15,13 +15,14 @@ class TileMap : public QGraphicsView
 public:
     TileMap(QGraphicsScene *scene, int size_x, int size_y, TileLoader *tileLoader, QWidget *parent = nullptr);
 
-    void loadMapIntoScene(QGraphicsScene *gS);
-
-    QList<Tile*>& getTileList() { return tileList; }
+    void initScene();
 
     void setCursorVisible(bool visible);
 
     bool isCursorVisible();
+
+    QList<Tile*>& getTileList() { return tileList; }
+    Tile* getTileAt(int x, int y);
 
 protected:
     void mouseMoveEvent(QMouseEvent *event) override;
@@ -30,8 +31,11 @@ protected:
 private:
     TileLoader *tileLoader;
     QGraphicsScene *mapScene;
+
     QGraphicsPixmapItem *cursorItem;
-    int size_x, size_y;
+
+    int sizeX, sizeY;
+    int tileSize;
     QList<Tile*> tileList;
 };
 

@@ -1,5 +1,3 @@
-set(CMAKE_AUTOMOC ON)
-
 add_library(tiles
     tilemap.h tilemap.cpp
     tiletype.h tiletype.cpp

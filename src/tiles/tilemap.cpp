@@ -2,23 +2,25 @@
 
 #include <QMouseEvent>
 
-TileMap::TileMap(QGraphicsScene *scene, int size_x, int size_y, TileLoader *tileLoader, QWidget *parent) :
+TileMap::TileMap(QGraphicsScene *scene, int sizeX, int sizeY, TileLoader *tileLoader, QWidget *parent) :
     QGraphicsView(scene, parent),
     mapScene(scene),
     tileLoader(tileLoader),
-    size_x(size_x),
-    size_y(size_y)
+    sizeX(sizeX),
+    sizeY(sizeY)
 {
-    for (int x = 0; x < size_x; x++) {
-        for (int y = 0; y < size_y; y++) {
+    tileSize = tileLoader->getTileTypeAt(TILE_TYPE::GRASS)->getTileImage().height();
+
+    for (int x = 0; x < sizeX; x++) {
+        for (int y = 0; y < sizeY; y++) {
             const TileType *tileType = tileLoader->getTileTypeAt(TILE_TYPE::GRASS);
             const int size = tileType->getTileImage().height();
             Tile *tile = new Tile(tileType, QRectF(x * size, y * size, size, size));
-            tile->setAcceptHoverEvents(true);
+            //tile->setAcceptHoverEvents(true);
             tileList.append(tile);
         }
     }
-    loadMapIntoScene(mapScene);
+    initScene();
 
     setMouseTracking(true);
 
@@ -30,13 +32,13 @@ TileMap::TileMap(QGraphicsScene *scene, int size_x, int size_y, TileLoader *tile
     mapScene->addItem(cursorItem);
 }
 
-void TileMap::loadMapIntoScene(QGraphicsScene *gS)
+void TileMap::initScene()
 {
     foreach (Tile *tile, tileList) {
         tile->setPos(tile->rect.x(), tile->rect.y());
         tile->setZValue(0);
         tile->setFlag(QGraphicsItem::ItemIsSelectable);
-        gS->addItem(tile);
+        mapScene->addItem(tile);
     }
 }
 
@@ -54,4 +56,9 @@ void TileMap::setCursorVisible(bool visible)
 bool TileMap::isCursorVisible()
 {
     return cursorItem->isVisible();
+}
+
+Tile* TileMap::getTileAt(int x, int y)
+{
+    return tileList.at(x * tileSize + y * tileSize);
 }
