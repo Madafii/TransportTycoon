@@ -4,8 +4,8 @@
 
 TileMap::TileMap(QGraphicsScene *scene, int sizeX, int sizeY, TileLoader *tileLoader, QWidget *parent) :
     QGraphicsView(scene, parent),
-    mapScene(scene),
     tileLoader(tileLoader),
+    mapScene(scene),
     sizeX(sizeX),
     sizeY(sizeY)
 {

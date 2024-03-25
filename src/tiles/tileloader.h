@@ -13,12 +13,12 @@ public:
     TileLoader();
     TileLoader(quint16 tileWidth, quint16 tileHeight, quint16 tileAmount);
 
-    void loadTileImagesFromFile(QString fileName);
+    void initTileTypes(QString filePath);
 
     const QList<TileType>& getTileTypes();
     const TileType* getTileTypeAt(TILE_TYPE type);
-    inline const quint16& getTileWidth() const { return tileWidth; }
-    inline const quint16& getTileHeight() const { return tileHeight; }
+    const quint16& getTileWidth() const { return tileWidth; }
+    const quint16& getTileHeight() const { return tileHeight; }
 
 private:
     quint16 tileWidth, tileHeight, tileAmount;

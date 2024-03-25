@@ -5,4 +5,4 @@ add_library(objects
 )
 
 target_include_directories(objects PUBLIC ".")
-target_link_libraries(objects Qt6::Core Qt6::Gui Qt6::Widgets)
+target_link_libraries(objects Qt6::Core Qt6::Gui)
