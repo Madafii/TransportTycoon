@@ -9,12 +9,12 @@ TileMap::TileMap(QGraphicsScene *scene, int sizeX, int sizeY, TileLoader *tileLo
     sizeX(sizeX),
     sizeY(sizeY)
 {
-    tileSize = tileLoader->getTileTypeAt(TILE_TYPE::GRASS)->getTileImage().height();
+    tileSize = tileLoader->getTileTypeAt(TILE_TYPE::GRASS)->getImage().height();
 
     for (int x = 0; x < sizeX; x++) {
         for (int y = 0; y < sizeY; y++) {
             const TileType *tileType = tileLoader->getTileTypeAt(TILE_TYPE::GRASS);
-            const int size = tileType->getTileImage().height();
+            const int size = tileType->getImage().height();
             Tile *tile = new Tile(tileType, QRectF(x * size, y * size, size, size));
             //tile->setAcceptHoverEvents(true);
             tileList.append(tile);
@@ -26,7 +26,7 @@ TileMap::TileMap(QGraphicsScene *scene, int sizeX, int sizeY, TileLoader *tileLo
 
     // setting up coursor Item
     const TileType *tileType = tileLoader->getTileTypeAt(TILE_TYPE::RAIL);
-    const QPixmap &image = tileType->getTileImage();
+    const QPixmap &image = tileType->getImage();
     cursorItem = new QGraphicsPixmapItem(image);
     cursorItem->setVisible(false);
     mapScene->addItem(cursorItem);

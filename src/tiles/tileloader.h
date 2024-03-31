@@ -3,8 +3,6 @@
 
 #include <QString>
 #include <QImage>
-#include <QPixmap>
-#include <QDebug>
 #include "tiletype.h"
 
 class TileLoader

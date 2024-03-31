@@ -1,5 +1,6 @@
 add_library(utils
     imagereader.h imagereader.cpp
+    typeobject.h typeobject.cpp
 )
 
 target_include_directories(utils PUBLIC ".")

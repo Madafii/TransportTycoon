@@ -11,13 +11,13 @@ Tile::Tile(const TileType *tileType, QRectF rect)
 
 QRectF Tile::boundingRect() const
 {
-    return tileType->getTileImage().rect();
+    return tileType->getImage().rect();
 }
 
 void Tile::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    QRectF imageRect = tileType->getTileImage().rect();
-    painter->drawPixmap(imageRect, tileType->getTileImage(), imageRect);
+    QRectF imageRect = tileType->getImage().rect();
+    painter->drawPixmap(imageRect, tileType->getImage(), imageRect);
 }
 
 void Tile::hoverEnterEvent(QGraphicsSceneHoverEvent *event)

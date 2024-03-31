@@ -1,5 +1,7 @@
 #include "tileloader.h"
 
+#include <QPixmap>
+#include <QDebug>
 #include "imagereader.h"
 
 TileLoader::TileLoader() {
@@ -52,7 +54,7 @@ const TileType* TileLoader::getTileTypeAt(TILE_TYPE type) {
 
     if (typeMap.isEmpty()) {
         foreach(const TileType& tileType, tileTypes) {
-            typeMap.insert(tileType.getTileType(), &tileType);
+            typeMap.insert(tileType.getType(), &tileType);
         }
     }
 

@@ -8,6 +8,7 @@
 
 #include "tileloader.h"
 #include "tilemap.h"
+#include "rail.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {

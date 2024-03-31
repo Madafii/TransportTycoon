@@ -1,6 +1,6 @@
 add_library(tiles
-    tilemap.h tilemap.cpp
     tiletype.h tiletype.cpp
+    tilemap.h tilemap.cpp
     tileloader.h tileloader.cpp
     tile.h tile.cpp
 )
