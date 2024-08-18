@@ -1,10 +1,11 @@
-#ifndef TYPEOBJECT_H
-#define TYPEOBJECT_H
+#ifndef TTETYPEOBJECT_H
+#define TTETYPEOBJECT_H
 
 #include <QPixmap>
 
 enum RAIL_TYPE {
-    SINGLE = 0,
+    STRAIGHT = 0,
+    DIAGONAL = 1,
     NONES = 1001
 };
 
@@ -16,10 +17,10 @@ enum TILE_TYPE {
 };
 
 template <typename T>
-class TypeObject
+class TTETypeObject
 {
 public:
-    TypeObject(T type, const QPixmap &image);
+    TTETypeObject(T type, const QPixmap &image);
 
     T getType() const { return type; }
     const QPixmap getImage() const { return image; }
@@ -29,4 +30,4 @@ private:
     QPixmap image;
 };
 
-#endif // TYPEOBJECT_H
+#endif // TTETYPEOBJECT_H

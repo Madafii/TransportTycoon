@@ -5,4 +5,4 @@ add_library(railNetwork
 )
 
 target_include_directories(railNetwork PUBLIC ".")
-target_link_libraries(railNetwork objects utils Qt6::Core)
+target_link_libraries(railNetwork utils objects Qt6::Core)

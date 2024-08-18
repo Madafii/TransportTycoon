@@ -4,9 +4,9 @@
 #include <QPixmap>
 #include <QString>
 
-#include "typeobject.h"
+#include "ttetypeobject.h"
 
-class TileType : public TypeObject<TILE_TYPE>
+class TileType : public TTETypeObject<TILE_TYPE>
 {
 public:
     TileType(TILE_TYPE tileType, const QPixmap &tileImage);

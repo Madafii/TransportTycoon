@@ -6,4 +6,4 @@ add_library(tiles
 )
 
 target_include_directories(tiles PUBLIC ".")
-target_link_libraries(tiles utils Qt6::Core Qt6::Gui Qt6::Widgets)
+target_link_libraries(tiles utils objects Qt6::Core Qt6::Gui Qt6::Widgets)

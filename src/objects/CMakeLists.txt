@@ -1,7 +1,9 @@
 add_subdirectory(rail_network)
+add_subdirectory(tiles)
 
 add_library(objects
     tteobject.h tteobject.cpp
+    ttetypeobject.h ttetypeobject.cpp
 )
 
 target_include_directories(objects PUBLIC ".")

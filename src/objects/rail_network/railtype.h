@@ -1,11 +1,11 @@
 #ifndef RAILTYPE_H
 #define RAILTYPE_H
 
-#include <typeobject.h>
+#include <ttetypeobject.h>
 
 class QPixmap;
 
-class RailType : public TypeObject<RAIL_TYPE>
+class RailType : public TTETypeObject<RAIL_TYPE>
 {
 public:
     RailType(RAIL_TYPE railType, const QPixmap &railImage);

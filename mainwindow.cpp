@@ -17,7 +17,6 @@ MainWindow::MainWindow(QWidget *parent)
     tileMap->setBackgroundBrush(Qt::lightGray);
     tileMap->setRenderHint(QPainter::Antialiasing);
     //ui->graphicsViewMain->setDragMode(QGraphicsView::ScrollHandDrag);
-
 }
 
 MainWindow::~MainWindow()
