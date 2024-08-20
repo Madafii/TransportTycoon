@@ -28,6 +28,7 @@ add_subdirectory(src)
 qt6_add_executable(TransportTycoon
     MANUAL_FINALIZATION
     ${PROJECT_SOURCES}
+    src/Applications/CMakeLists.txt
 )
 
 target_link_libraries(TransportTycoon PRIVATE Qt${QT_VERSION_MAJOR}::Widgets tiles railNetwork)
