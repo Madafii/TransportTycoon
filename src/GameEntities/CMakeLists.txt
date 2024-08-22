@@ -1,1 +1,2 @@
-aadd_subdirectory()
+add_subdirectory(company)
+add_subdirectory(inanimate)

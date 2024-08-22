@@ -1,7 +1,7 @@
-add_library(utils
+add_library(Utils
     imagereader.h imagereader.cpp
 )
 
-target_include_directories(utils PUBLIC ".")
-target_link_libraries(utils PRIVATE Qt6::Core Qt6::Gui)
+target_include_directories(Utils PUBLIC ".")
+target_link_libraries(Utils PRIVATE Qt6::Core Qt6::Gui)
 

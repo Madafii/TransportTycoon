@@ -8,11 +8,11 @@ QList<QPixmap> ImageReader::loadPixMapImagesFromFile(QString filePath) {
     QImage image(filePath);
     QList<QPixmap> pixmapList;
 
-    // fixed for everything for now
+    // fixed for all images
     const int tileSize = 50;
 
     if (image.isNull()) {
-        qCritical() << "Failed to load the image from the file: " << filePath;
+        qCritical() << "ImageReader: Failed to load image from the file: " << filePath;
         return pixmapList;
     }
 
