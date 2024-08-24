@@ -1,4 +1,4 @@
-#include "tilemap.h"
+#include "ttetilemap.h"
 
 #include <QMouseEvent>
 
@@ -9,11 +9,11 @@ TTETileMap::TTETileMap(QGraphicsScene *scene, int sizeX, int sizeY, TTETileLoade
     sizeX(sizeX),
     sizeY(sizeY)
 {
-    tileSize = tileLoader->getTileTypeAt(TILE_TYPE::GRASS)->getImage().height();
+    tileSize = tileLoader->getTypeAt(TILE_TYPE::GRASS, TILE_ORIENTATION::UP)->getImage().height();
 
     for (int x = 0; x < sizeX; x++) {
         for (int y = 0; y < sizeY; y++) {
-            const TTETileType *tileType = tileLoader->getTileTypeAt(TILE_TYPE::GRASS);
+            const TTETileType *tileType = tileLoader->getTypeAt(TILE_TYPE::GRASS, TILE_ORIENTATION::UP);
             const int size = tileType->getImage().height();
             TTETile *tile = new TTETile(tileType, QRectF(x * size, y * size, size, size));
             //tile->setAcceptHoverEvents(true);
@@ -25,7 +25,7 @@ TTETileMap::TTETileMap(QGraphicsScene *scene, int sizeX, int sizeY, TTETileLoade
     setMouseTracking(true);
 
     // setting up coursor Item
-    const TTETileType *tileType = tileLoader->getTileTypeAt(TILE_TYPE::RAIL);
+    const TTETileType *tileType = tileLoader->getTypeAt(TILE_TYPE::DESERT, TILE_ORIENTATION::UP);
     const QPixmap &image = tileType->getImage();
     cursorItem = new QGraphicsPixmapItem(image);
     cursorItem->setVisible(false);

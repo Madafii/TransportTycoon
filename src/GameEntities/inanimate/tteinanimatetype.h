@@ -4,34 +4,35 @@
 #include <QPixmap>
 
 // !-------------------count all the enums up from zero---------------------!//
-// give all enums a last value ending with '_COUNT'
+
+// give all enums a last value ending with '_COUNT' and count them up from 0
 
 enum RAIL_ORIENTATION {
-    HORIZONTAL_RAIL = 0,
-    DIAGONAL_RAIL = 1,
-    LEFTDOWNUPRIGHT_RAIL = 2,
-    LEFTUPRIGHTDOWN_RAIL = 3, // TODO: add end of the line types when the rail is disconected aka has no adjacent tile make it look different(like a stop sign or something)
+    HORIZONTAL_RAIL,
+    DIAGONAL_RAIL,
+    LEFTDOWNUPRIGHT_RAIL,
+    LEFTUPRIGHTDOWN_RAIL, // TODO: add end of the line types when the rail is disconected aka has no adjacent tile make it look different(like a stop sign or something)
     RAIL_ORIENTATION_COUNT
 };
 
 enum RAIL_TYPE {
-    ELECTRIC = 0,
+    ELECTRIC,
     RAIL_TYPE_COUNT
 };
 
 enum TILE_ORIENTATION {
-    UP = 0,
-    RIGHT = 1,
-    DOWN = 2,
-    LEFT = 3,
+    UP,
+    RIGHT,
+    DOWN,
+    LEFT,
     TILE_ORIENTATION_COUNT
 };
 
 enum TILE_TYPE {
-    GRASS = 0,
-    DESERT = 1,
-    EXTRA = 2,
-    NONE_TILE = 3,
+    GRASS,
+    DESERT,
+    EXTRA,
+    NONE_TILE,
     TILE_TYPE_COUNT
 };
 

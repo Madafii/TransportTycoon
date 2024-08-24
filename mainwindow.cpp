@@ -6,9 +6,9 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    tileLoader = new TileLoader();
+    tileLoader = new TTETileLoader("D:/Finn Pittermann/Documents/QtProjects/TransportTycoon/user/images/test.png");
     QGraphicsScene *scene = new QGraphicsScene(this);
-    tileMap = new TileMap(scene, 100, 100, tileLoader, this);
+    tileMap = new TTETileMap(scene, 100, 100, tileLoader, this);
 
     tileMap->setObjectName("graphicsViewMain");
 

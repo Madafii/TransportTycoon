@@ -1,7 +1,7 @@
 add_library(railNetwork
-    rail.h rail.cpp
-    railsetreader.h railsetreader.cpp
-    railtype.h railtype.cpp
+
+    tterailloader.h tterailloader.cpp
+    tterailtype.h tterailtype.cpp
 )
 
 target_include_directories(railNetwork PUBLIC ".")

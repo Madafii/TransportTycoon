@@ -1,5 +1,5 @@
-#ifndef TILEMAP_H
-#define TILEMAP_H
+#ifndef TTETILEMAP_H
+#define TTETILEMAP_H
 
 #include <QGraphicsScene>
 #include <QGraphicsView>
@@ -39,4 +39,4 @@ private:
     QList<TTETile*> tileList;
 };
 
-#endif // TILEMAP_H
+#endif // TTETILEMAP_H

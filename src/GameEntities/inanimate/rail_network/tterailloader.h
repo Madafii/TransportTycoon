@@ -1,15 +1,15 @@
-#ifndef RAILSETREADER_H
-#define RAILSETREADER_H
+#ifndef TTERAILLOADER_H
+#define TTERAILLOADER_H
 
-#include "railtype.h"
+#include "tterailtype.h"
 #include "tteimagesetloader.h"
 
 class QString;
 
-class RailSetReader : public TTEImageSetLoader<RailType>
+class RailSetReader : public TTEImageSetLoader<TTERailType>
 {
 public:
-    RailSetReader(QString filePath);
+    RailSetReader(const QString filePath, const quint16 typeSize = RAIL_TYPE_COUNT, const quint16 orientationSize = RAIL_ORIENTATION_COUNT);
 
     // void initRailSet(QString filePath);
 
@@ -23,4 +23,4 @@ private:
     // QList<RailType> tileTypes;
 };
 
-#endif // RAILSETREADER_H
+#endif // TTERAILLOADER_H

@@ -14,30 +14,32 @@
 template <class C>
 class TTEImageSetLoader
 {
-    // Extract the enums types of C
+    // Extract the enum types of C
     using EType        = typename C::FirstType;
     using EOrientation = typename C::SecondType;
 
-    // Ensure that C is derived from BaseClass
+    // Ensure that C is derived from TTEInanimateType<T1, T2>
     static_assert(std::is_base_of<TTEInanimateType<EType, EOrientation>, C>::value, "C must inherit from TTEInanimateType<T1, T2>");
 public:
-    TTEImageSetLoader(QString filePath, quint16 typeSize, quint16 orientationSize);
+    TTEImageSetLoader(QString filePath, const quint16 typeSize, const quint16 orientationSize);
 
     void initTypes(QString filePath);
-    const C* getTypeAt(EType type, EOrientation orienation);
-    const QList<C>& getTypes();
+    const C* getTypeAt(const EType type, const EOrientation orienation) const;
+    const QList<C>& getTypes() const;
     const quint16& getTypeWidth() const { return typeWidth; }
     const quint16& getTypeHeight() const { return typeHeight; }
 
 private:
-    quint16 typeWidth, typeHeight, typeAmount, typeSize, orientationSize;
+    const quint16 typeWidth = 50;
+    const quint16 typeHeight = 50;
+    quint16 typeSize, orientationSize;
     QList<C> types;
 };
 
 // !------------------------implement templates--------------------!
 
 template <typename C>
-TTEImageSetLoader<C>::TTEImageSetLoader(QString filePath, quint16 typeSize, quint16 orientationSize)
+TTEImageSetLoader<C>::TTEImageSetLoader(QString filePath, const quint16 typeSize, const quint16 orientationSize)
     : typeSize(typeSize), orientationSize(orientationSize)
 {
     initTypes(filePath);
@@ -73,23 +75,23 @@ void TTEImageSetLoader<C>::initTypes(QString filePath)
 }
 
 template <typename C>
-const QList<C>& TTEImageSetLoader<C>::getTypes()
+const QList<C>& TTEImageSetLoader<C>::getTypes() const
 {
     return types;
 }
 
 template <typename C>
-const C* TTEImageSetLoader<C>::getTypeAt(EType type, EOrientation orientation)
+const C* TTEImageSetLoader<C>::getTypeAt(const EType type, const EOrientation orientation) const
 {
-    static QHash<EType, const C*> typeMap;
+    static QHash<const std::pair<EType, EOrientation>, const C*> typeMap;
 
     if (typeMap.isEmpty()) {
-        foreach (const C& tileType, types) {
-            typeMap.insert(tileType.getType(), &tileType);
+        foreach (const C& type, types) {
+            typeMap.insert(std::pair<EType, EOrientation>(type.getType(), type.getOrientation()), &type);
         }
     }
 
-    return typeMap.value(type, nullptr);
+    return typeMap.value(std::pair<EType, EOrientation>(type, orientation), nullptr);
 }
 
 #endif // TTEIMAGESETLOADER_H

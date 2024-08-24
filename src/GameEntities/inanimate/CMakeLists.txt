@@ -10,4 +10,4 @@ add_library(inanimate
 )
 
 target_include_directories(inanimate PUBLIC ".")
-target_link_libraries(inanimate Utils Qt6::Core Qt6::Gui)
+target_link_libraries(inanimate Utils Qt6::Core Qt6::Gui Qt6::Widgets)

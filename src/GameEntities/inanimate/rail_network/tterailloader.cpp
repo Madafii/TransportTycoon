@@ -1,12 +1,12 @@
-#include "railsetreader.h"
+#include "tterailloader.h"
 
 #include <QImage>
 #include <QPixmap>
 #include <QDebug>
 #include "imagereader.h"
 
-RailSetReader::RailSetReader(QString filePath)
-    : TTEImageSetLoader<RailType>(filePath, RailType.)
+RailSetReader::RailSetReader(const QString filePath, const quint16 typeSize, const quint16 orientationSize)
+    : TTEImageSetLoader<TTERailType>(filePath, typeSize, orientationSize)
 {
     // for testing use this file
     // filePath = QString(qgetenv("TTEUSER") + "/images/test.png");

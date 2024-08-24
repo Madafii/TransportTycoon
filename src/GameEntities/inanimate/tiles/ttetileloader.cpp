@@ -1,27 +1,10 @@
-#include "tileloader.h"
+#include "ttetileloader.h"
 
-#include <QPixmap>
-#include <QDebug>
-#include "imagereader.h"
+TTETileLoader::TTETileLoader(const QString filePath, quint16 typeSize, quint16 orientationSize) :
+    TTEImageSetLoader<TTETileType>(filePath, typeSize, orientationSize)
+{
 
-// TileLoader::TileLoader() {
-//     // standard tile settings
-//     tileWidth   = 50;
-//     tileHeight  = 50;
-
-//     QString stdFileName = QString(qgetenv("TTEUSER") + "/images/test.png");
-
-//     initTileTypes(stdFileName);
-// }
-
-// // TODO: do this later working with default values first
-// TileLoader::TileLoader(quint16 tileWidth, quint16 tileHeight, quint16 tileAmount) :
-//     tileWidth(tileWidth),
-//     tileHeight(tileHeight),
-//     tileAmount(tileAmount)
-// {
-
-// }
+}
 
 // void TileLoader::initTileTypes(QString filePath)
 // {

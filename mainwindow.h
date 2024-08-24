@@ -6,9 +6,8 @@
 #include <QGraphicsView>
 #include <QGraphicsRectItem>
 
-#include "tileloader.h"
-#include "tilemap.h"
-#include "rail.h"
+#include "ttetileloader.h"
+#include "ttetilemap.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -30,8 +29,8 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    TileLoader *tileLoader;
-    TileMap *tileMap;
+    TTETileLoader *tileLoader;
+    TTETileMap *tileMap;
 
     // TODO:
     bool buildRail = false;
