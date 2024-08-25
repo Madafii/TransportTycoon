@@ -14,7 +14,7 @@ TTETileMap::TTETileMap(QGraphicsScene *scene, int sizeX, int sizeY, TTETileLoade
     for (int x = 0; x < sizeX; x++) {
         for (int y = 0; y < sizeY; y++) {
             const TTETileType *tileType = tileLoader->getTypeAt(TILE_TYPE::GRASS, TILE_ORIENTATION::UP);
-            const int size = tileType->getImage().height();
+            const int &size = tileType->getImage().height();
             TTETile *tile = new TTETile(tileType, QRectF(x * size, y * size, size, size));
             //tile->setAcceptHoverEvents(true);
             tileList.append(tile);

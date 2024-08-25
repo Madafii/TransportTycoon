@@ -6,8 +6,8 @@
 #include <QGraphicsView>
 #include <QGraphicsRectItem>
 
-#include "ttetileloader.h"
-#include "ttetilemap.h"
+class TTETileLoader;
+class TTETileMap;
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -27,10 +27,14 @@ private slots:
 
     void on_pushButtonAddRail_clicked();
 
+    void on_pushButtonRails_clicked();
+
 private:
     Ui::MainWindow *ui;
     TTETileLoader *tileLoader;
     TTETileMap *tileMap;
+
+    void initMainView();
 
     // TODO:
     bool buildRail = false;
