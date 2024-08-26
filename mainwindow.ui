@@ -54,7 +54,7 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="data/resources.qrc">
+         <iconset>
           <normaloff>:/icons/build_rail_icon.jpg</normaloff>:/icons/build_rail_icon.jpg</iconset>
         </property>
         <property name="iconSize">
@@ -119,8 +119,6 @@
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
- <resources>
-  <include location="data/resources.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>
