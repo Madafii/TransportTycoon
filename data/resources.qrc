@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/icons">
-        <file>build_rail_icon.jpg</file>
+        <file>build_rail_iconH.jpg</file>
+        <file>build_rail_iconV.jpg</file>
     </qresource>
 </RCC>

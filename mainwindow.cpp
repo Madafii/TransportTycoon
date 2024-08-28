@@ -41,8 +41,24 @@ void MainWindow::on_pushButtonAddRail_clicked()
 
 void MainWindow::on_pushButtonRails_clicked()
 {
-    TTERailBuilderMenu *railBuilderMenu = new TTERailBuilderMenu(this);
-    //railBuilderMenu->setStyleSheet("border: 1px solid black; border-radius: 0px;");
+    // only have one instance of it open
+    if (isOpenWindow<TTERailBuilderMenu>()) {
+        return;
+    }
+    std::unique_ptr<QWidget> railBuilderMenu = std::make_unique<TTERailBuilderMenu>(this);
+    connect(dynamic_cast<TTERailBuilderMenu*>(railBuilderMenu.get()), &TTERailBuilderMenu::closeWindow, this, &MainWindow::on_windowClosed);
     railBuilderMenu->show();
+
+    openWindowsList.push_back(std::move(railBuilderMenu));
 }
 
+void MainWindow::on_windowClosed(QWidget *closedWidget)
+{
+    auto it = std::find_if(openWindowsList.begin(), openWindowsList.end(), [&](const std::unique_ptr<QWidget>& ptr) {
+        return ptr.get() == closedWidget;
+    });
+
+    if (it !=openWindowsList.end()) {
+        openWindowsList.erase(it);
+    }
+}

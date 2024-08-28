@@ -17,6 +17,12 @@ public:
 
 private:
     Ui::TTERailBuilderMenu *ui;
+
+signals:
+    void closeWindow(QWidget *widget);
+
+protected:
+    void closeEvent(QCloseEvent *event) override;
 };
 
 #endif // TTERAILBUILDERMENU_H

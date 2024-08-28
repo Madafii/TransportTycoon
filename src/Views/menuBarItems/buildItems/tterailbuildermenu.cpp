@@ -11,11 +11,18 @@ TTERailBuilderMenu::TTERailBuilderMenu(QWidget *parent)
     //setStyleSheet("QWidget { border: 1px solid black; border-radius: 0px; }");
 
     // set icons for the buttons
-    ui->pushButtonRailHorizontal->setIcon(QIcon(":/icons/build_rail_icon.jpg"));
-    ui->pushButtonRailVertical->setIcon(QIcon(":/icons/build_rail_icon.jpg"));
+    ui->pushButtonRailHorizontal->setIcon(QIcon(":/icons/build_rail_iconH.jpg"));
+    ui->pushButtonRailVertical->setIcon(QIcon(":/icons/build_rail_iconV.jpg"));
 }
 
 TTERailBuilderMenu::~TTERailBuilderMenu()
 {
     delete ui;
+}
+
+void TTERailBuilderMenu::closeEvent(QCloseEvent *event)
+{
+    QWidget::closeEvent(event);
+
+    emit closeWindow(this);
 }

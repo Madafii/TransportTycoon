@@ -24,19 +24,44 @@ public:
     ~MainWindow();
 
 private slots:
-
     void on_pushButtonAddRail_clicked();
-
     void on_pushButtonRails_clicked();
+
+public slots:
+    void on_windowClosed(QWidget* closedWidget);
 
 private:
     Ui::MainWindow *ui;
     TTETileLoader *tileLoader;
     TTETileMap *tileMap;
 
+    std::vector<std::unique_ptr<QWidget>> openWindowsList;
+
     void initMainView();
 
-    // TODO:
+    template <typename T>
+    inline bool isOpenWindow() {
+        for (const auto &openWidget : openWindowsList) {
+            if (qobject_cast<T*>(openWidget.get()) != nullptr) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     bool buildRail = false;
 };
+
+
+
+// template <typename T>
+// inline bool isOpenWindow(QList<QWidget*> &list) {
+//     foreach (QWidget *openWidget, list) {
+//         if (qobject_cast<T*>(openWidget) != nullptr) {
+//             return true;
+//         }
+//     }
+//     return false;
+// }
+
 #endif // MAINWINDOW_H
