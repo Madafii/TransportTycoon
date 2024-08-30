@@ -1,28 +1,23 @@
 #include "tterailbuildermenu.h"
-#include "ui_tterailbuildermenu.h"
 
 TTERailBuilderMenu::TTERailBuilderMenu(QWidget *parent)
-    : QWidget(parent)
-    , ui(new Ui::TTERailBuilderMenu)
+    : TTEBuilderMenuBase(parent)
 {
-    ui->setupUi(this);
-
-    setWindowFlags(Qt::Window | Qt::WindowCloseButtonHint);
-    //setStyleSheet("QWidget { border: 1px solid black; border-radius: 0px; }");
-
-    // set icons for the buttons
-    ui->pushButtonRailHorizontal->setIcon(QIcon(":/icons/build_rail_iconH.jpg"));
-    ui->pushButtonRailVertical->setIcon(QIcon(":/icons/build_rail_iconV.jpg"));
+    initButtonIcons();
 }
 
 TTERailBuilderMenu::~TTERailBuilderMenu()
 {
-    delete ui;
+
 }
 
-void TTERailBuilderMenu::closeEvent(QCloseEvent *event)
+void TTERailBuilderMenu::initButtonIcons()
 {
-    QWidget::closeEvent(event);
+    buttonH->setIcon(QIcon(":/icons/build_rail_iconH.jpg"));
+    buttonV->setIcon(QIcon(":/icons/build_rail_iconV.jpg"));
 
-    emit closeWindow(this);
+    // set button sizes
+    const QSize &buttonSize = buttonH->size();
+    buttonH->setIconSize(buttonSize);
+    buttonV->setIconSize(buttonSize);
 }

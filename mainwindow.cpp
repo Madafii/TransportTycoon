@@ -45,20 +45,25 @@ void MainWindow::on_pushButtonRails_clicked()
     if (isOpenWindow<TTERailBuilderMenu>()) {
         return;
     }
+
+    // create builder menu
     std::unique_ptr<QWidget> railBuilderMenu = std::make_unique<TTERailBuilderMenu>(this);
     connect(dynamic_cast<TTERailBuilderMenu*>(railBuilderMenu.get()), &TTERailBuilderMenu::closeWindow, this, &MainWindow::on_windowClosed);
     railBuilderMenu->show();
+    openWindowsList.push_back(buttonWindowPair(ui->pushButtonRails, std::move(railBuilderMenu)));
 
-    openWindowsList.push_back(std::move(railBuilderMenu));
+    ui->pushButtonRails->setEnabled(false);
 }
 
 void MainWindow::on_windowClosed(QWidget *closedWidget)
 {
-    auto it = std::find_if(openWindowsList.begin(), openWindowsList.end(), [&](const std::unique_ptr<QWidget>& ptr) {
-        return ptr.get() == closedWidget;
+    auto it = std::find_if(openWindowsList.begin(), openWindowsList.end(), [&](const buttonWindowPair &pair) {
+        return pair.second.get() == closedWidget;
     });
 
     if (it !=openWindowsList.end()) {
+        // set the button enabled then erase the widget
+        it->first->setEnabled(true);
         openWindowsList.erase(it);
     }
 }

@@ -1,2 +1,3 @@
 add_subdirectory(main_tile_view)
 add_subdirectory(menuBarItems)
+add_subdirectory(viewTemplates)

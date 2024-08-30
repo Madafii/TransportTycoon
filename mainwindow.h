@@ -5,6 +5,7 @@
 #include <QGraphicsScene>
 #include <QGraphicsView>
 #include <QGraphicsRectItem>
+#include <QPushButton>
 
 class TTETileLoader;
 class TTETileMap;
@@ -35,14 +36,15 @@ private:
     TTETileLoader *tileLoader;
     TTETileMap *tileMap;
 
-    std::vector<std::unique_ptr<QWidget>> openWindowsList;
+    typedef std::pair<QPushButton*, std::unique_ptr<QWidget>> buttonWindowPair;
+    std::vector<buttonWindowPair> openWindowsList;
 
     void initMainView();
 
     template <typename T>
     inline bool isOpenWindow() {
         for (const auto &openWidget : openWindowsList) {
-            if (qobject_cast<T*>(openWidget.get()) != nullptr) {
+            if (qobject_cast<T*>(openWidget.second.get()) != nullptr) {
                 return true;
             }
         }

@@ -2,12 +2,9 @@
 #define TTERAILBUILDERMENU_H
 
 #include <QWidget>
+#include "ttebuildermenubase.h"
 
-namespace Ui {
-class TTERailBuilderMenu;
-}
-
-class TTERailBuilderMenu : public QWidget
+class TTERailBuilderMenu : public TTEBuilderMenuBase
 {
     Q_OBJECT
 
@@ -16,13 +13,7 @@ public:
     ~TTERailBuilderMenu();
 
 private:
-    Ui::TTERailBuilderMenu *ui;
-
-signals:
-    void closeWindow(QWidget *widget);
-
-protected:
-    void closeEvent(QCloseEvent *event) override;
+    void initButtonIcons() override;
 };
 
 #endif // TTERAILBUILDERMENU_H
