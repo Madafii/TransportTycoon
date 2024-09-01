@@ -1,5 +1,6 @@
 add_library(buildItems
     tterailbuildermenu.h tterailbuildermenu.cpp
+    ttestreetbuildermenu.h ttestreetbuildermenu.cpp
 )
 
 target_include_directories(buildItems PUBLIC ".")

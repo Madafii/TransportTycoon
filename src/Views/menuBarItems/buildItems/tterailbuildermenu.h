@@ -10,10 +10,9 @@ class TTERailBuilderMenu : public TTEBuilderMenuBase
 
 public:
     explicit TTERailBuilderMenu(QWidget *parent = nullptr);
-    ~TTERailBuilderMenu();
 
 private:
-    void initButtonIcons() override;
+    void initButtonIcons();
 };
 
 #endif // TTERAILBUILDERMENU_H

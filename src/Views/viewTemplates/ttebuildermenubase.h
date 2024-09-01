@@ -29,7 +29,8 @@ protected:
 
     void closeEvent(QCloseEvent *event) override;
 
-    virtual void initButtonIcons() = 0 ;
+    // could lead to undefined behavior when calling in constructor of derived class
+    //virtual void initButtonIcons() = 0 ;
 };
 
 #endif // TTEBUILDERMENUBASE_H

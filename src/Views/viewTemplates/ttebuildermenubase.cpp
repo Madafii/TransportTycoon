@@ -16,8 +16,8 @@ void TTEBuilderMenuBase::initWidget()
     buttonV = new QPushButton(this);
 
     const QSize baseSize = QSize(50, 50);
-    buttonH->setBaseSize(baseSize);
-    buttonV->setBaseSize(baseSize);
+    buttonH->setFixedSize(baseSize);
+    buttonV->setFixedSize(baseSize);
 
     layout->addWidget(buttonH);
     layout->addWidget(buttonV);

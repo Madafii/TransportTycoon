@@ -4,6 +4,7 @@
 #include "ttetileloader.h"
 #include "ttetilemap.h"
 #include "tterailbuildermenu.h"
+#include "ttestreetbuildermenu.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -41,18 +42,14 @@ void MainWindow::on_pushButtonAddRail_clicked()
 
 void MainWindow::on_pushButtonRails_clicked()
 {
-    // only have one instance of it open
-    if (isOpenWindow<TTERailBuilderMenu>()) {
-        return;
-    }
+    createBuildWindow<TTERailBuilderMenu>(ui->pushButtonRails);
+}
 
-    // create builder menu
-    std::unique_ptr<QWidget> railBuilderMenu = std::make_unique<TTERailBuilderMenu>(this);
-    connect(dynamic_cast<TTERailBuilderMenu*>(railBuilderMenu.get()), &TTERailBuilderMenu::closeWindow, this, &MainWindow::on_windowClosed);
-    railBuilderMenu->show();
-    openWindowsList.push_back(buttonWindowPair(ui->pushButtonRails, std::move(railBuilderMenu)));
-
-    ui->pushButtonRails->setEnabled(false);
+void MainWindow::on_pushButtonStreets_clicked()
+{
+    // if (isOpenWindow<TTEStreetBuilderMenu>()) {
+    //     return;
+    // }
 }
 
 void MainWindow::on_windowClosed(QWidget *closedWidget)
