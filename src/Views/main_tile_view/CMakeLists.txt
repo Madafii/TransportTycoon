@@ -1,7 +1,7 @@
-add_library(mainTileView
-    ttetilemap.h ttetilemap.cpp
+add_library(MainViewMap
+    ttemainviewmap.h ttemainviewmap.cpp
 )
 
-target_include_directories(mainTileView PUBLIC ".")
-target_link_libraries(mainTileView tiles railNetwork Qt6::Core Qt6::Gui Qt6::Widgets)
+target_include_directories(MainViewMap PUBLIC ".")
+target_link_libraries(MainViewMap tiles railNetwork Qt6::Core Qt6::Gui Qt6::Widgets)
 

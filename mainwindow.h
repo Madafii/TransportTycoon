@@ -11,7 +11,7 @@
 class TTETileLoader;
 class TTERailLoader;
 class TTERailType;
-class TTETileMap;
+class TTEMainViewMap;
 class TTEBuilderMenuBase;
 class TTEInanimateTypeBase;
 
@@ -42,7 +42,7 @@ private:
     Ui::MainWindow *ui;
     TTETileLoader *tileLoader;
     TTERailLoader *railLoader;
-    TTETileMap *tileMap;
+    TTEMainViewMap *tileMap;
     const TTERailType *selectBuildType = nullptr;
 
     typedef std::pair<QPushButton*, std::unique_ptr<QWidget>> buttonWindowPair;

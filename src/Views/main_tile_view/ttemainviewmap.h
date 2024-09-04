@@ -1,5 +1,5 @@
-#ifndef TTETILEMAP_H
-#define TTETILEMAP_H
+#ifndef TTEMAINVIEWMAPH_H
+#define TTEMAINVIEWMAPH_H
 
 #include <QGraphicsScene>
 #include <QGraphicsView>
@@ -11,10 +11,10 @@
 class TTETileType;
 class TTEInanimateTypeBase;
 
-class TTETileMap : public QGraphicsView
+class TTEMainViewMap : public QGraphicsView
 {
 public:
-    TTETileMap(QGraphicsScene *scene, int size_x, int size_y, TTETileLoader *tileLoader, QWidget *parent = nullptr);
+    TTEMainViewMap(QGraphicsScene *scene, int size_x, int size_y, TTETileLoader *tileLoader, QWidget *parent = nullptr);
 
     void initScene();
 
@@ -41,4 +41,4 @@ private:
     QList<TTETile*> tileList;
 };
 
-#endif // TTETILEMAP_H
+#endif // TTEMAINVIEWMAPH_H

@@ -3,7 +3,7 @@
 
 #include "ttetileloader.h"
 #include "tterailloader.h"
-#include "ttetilemap.h"
+#include "ttemainviewmap.h"
 #include "tterailbuildermenu.h"
 #include "ttestreetbuildermenu.h"
 
@@ -28,8 +28,8 @@ MainWindow::~MainWindow()
 void MainWindow::initMainView()
 {
     QGraphicsScene *scene = new QGraphicsScene(this);
-
-    tileMap = new TTETileMap(scene, 100, 100, tileLoader, this);
+    
+    tileMap = new TTEMainViewMap(scene, 100, 100, tileLoader, this);
     tileMap->setObjectName("graphicsViewMain");
 
     ui->verticalLayout->addWidget(tileMap);
