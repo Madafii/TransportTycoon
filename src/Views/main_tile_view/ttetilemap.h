@@ -9,6 +9,7 @@
 #include "ttetileloader.h"
 
 class TTETileType;
+class TTEInanimateTypeBase;
 
 class TTETileMap : public QGraphicsView
 {
@@ -17,9 +18,9 @@ public:
 
     void initScene();
 
-    void setCursorVisible(bool visible);
-
-    bool isCursorVisible();
+    void setCursorPreviewVisible(bool visible);
+    void setCursorPreviewItem(const TTEInanimateTypeBase *type);
+    bool isCursorPreviewVisible();
     
     QList<TTETile*>& getTileList() { return tileList; }
     TTETile* getTileAt(int x, int y);
@@ -32,6 +33,7 @@ private:
     TTETileLoader *tileLoader;
     QGraphicsScene *mapScene;
 
+    TTEInanimateTypeBase *selectedType;
     QGraphicsPixmapItem *cursorItem;
 
     int sizeX, sizeY;

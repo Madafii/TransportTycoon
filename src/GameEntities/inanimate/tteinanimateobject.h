@@ -4,8 +4,6 @@
 #include <QGraphicsItem>
 #include <QPainter>
 
-#include "tteinanimatetype.h"
-
 class QPixmap;
 
 template<typename C>

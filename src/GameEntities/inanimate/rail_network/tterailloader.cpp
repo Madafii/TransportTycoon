@@ -5,7 +5,7 @@
 #include <QDebug>
 #include "imagereader.h"
 
-RailSetReader::RailSetReader(const QString filePath, const quint16 typeSize, const quint16 orientationSize)
+TTERailLoader::TTERailLoader(const QString filePath, const quint16 typeSize, const quint16 orientationSize)
     : TTEImageSetLoader<TTERailType>(filePath, typeSize, orientationSize)
 {
     // for testing use this file

@@ -5,6 +5,7 @@
 
 class TTEStreetBuilderMenu : public TTEBuilderMenuBase
 {
+    Q_OBJECT
 public:
     explicit TTEStreetBuilderMenu(QWidget *parent = nullptr);
 

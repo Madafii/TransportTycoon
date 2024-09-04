@@ -2,6 +2,8 @@
 
 #include <QMouseEvent>
 
+#include "tterailtype.h"
+
 TTETileMap::TTETileMap(QGraphicsScene *scene, int sizeX, int sizeY, TTETileLoader *tileLoader, QWidget *parent) :
     QGraphicsView(scene, parent),
     tileLoader(tileLoader),
@@ -48,12 +50,31 @@ void TTETileMap::mouseMoveEvent(QMouseEvent *event)
     cursorItem->setPos(hoveredItem->pos());
 }
 
-void TTETileMap::setCursorVisible(bool visible)
+void TTETileMap::setCursorPreviewVisible(bool visible)
 {
     cursorItem->setVisible(visible);
 }
 
-bool TTETileMap::isCursorVisible()
+void TTETileMap::setCursorPreviewItem(const TTEInanimateTypeBase *type)
+{
+    QPixmap image;
+    if (const TTERailType *railType = dynamic_cast<const TTERailType*>(type)) {
+        image = railType->getImage();
+    }
+    else {
+        image = tileLoader->getTypeAt(TILE_TYPE::DESERT, TILE_ORIENTATION::UP)->getImage();
+    }
+    if (image.isNull()) {
+        qWarning() << "tried to set image to previewCursor";
+        return;
+    }
+    cursorItem->setPixmap(image);
+    cursorItem->setVisible(true);
+    mapScene->update();
+    // mapScene->addItem(cursorItem);
+}
+
+bool TTETileMap::isCursorPreviewVisible()
 {
     return cursorItem->isVisible();
 }

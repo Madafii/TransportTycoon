@@ -86,7 +86,7 @@ const C* TTEImageSetLoader<C>::getTypeAt(const EType type, const EOrientation or
     static QHash<const std::pair<EType, EOrientation>, const C*> typeMap;
 
     if (typeMap.isEmpty()) {
-        foreach (const C& type, types) {
+        for (const C& type : types) {
             typeMap.insert(std::pair<EType, EOrientation>(type.getType(), type.getOrientation()), &type);
         }
     }

@@ -2,6 +2,7 @@
 #include "./ui_mainwindow.h"
 
 #include "ttetileloader.h"
+#include "tterailloader.h"
 #include "ttetilemap.h"
 #include "tterailbuildermenu.h"
 #include "ttestreetbuildermenu.h"
@@ -11,6 +12,10 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    // create image loaders for different types
+    tileLoader = new TTETileLoader(qgetenv("TTEUSER") + "/images/test.png");
+    railLoader = new TTERailLoader(qgetenv("TTEUSER") + "/images/test.png");
 
     initMainView();
 }
@@ -22,10 +27,9 @@ MainWindow::~MainWindow()
 
 void MainWindow::initMainView()
 {
-    tileLoader = new TTETileLoader(qgetenv("TTEUSER") + "/images/test.png");
     QGraphicsScene *scene = new QGraphicsScene(this);
-    tileMap = new TTETileMap(scene, 100, 100, tileLoader, this);
 
+    tileMap = new TTETileMap(scene, 100, 100, tileLoader, this);
     tileMap->setObjectName("graphicsViewMain");
 
     ui->verticalLayout->addWidget(tileMap);
@@ -37,19 +41,21 @@ void MainWindow::initMainView()
 
 void MainWindow::on_pushButtonAddRail_clicked()
 {
-    tileMap->setCursorVisible(!tileMap->isCursorVisible());
+    tileMap->setCursorPreviewVisible(!tileMap->isCursorPreviewVisible());
 }
 
 void MainWindow::on_pushButtonRails_clicked()
 {
     createBuildWindow<TTERailBuilderMenu>(ui->pushButtonRails);
+    if (TTERailBuilderMenu* openedRailBuilder = getOpenWindow<TTERailBuilderMenu>()) {
+        openedRailBuilder->setRailLoader(railLoader);
+        connect(openedRailBuilder, &TTERailBuilderMenu::railSelected, this, &MainWindow::set_selectedBuildingType);
+    }
 }
 
 void MainWindow::on_pushButtonStreets_clicked()
 {
-    // if (isOpenWindow<TTEStreetBuilderMenu>()) {
-    //     return;
-    // }
+    createBuildWindow<TTEStreetBuilderMenu>(ui->pushButtonStreets);
 }
 
 void MainWindow::on_windowClosed(QWidget *closedWidget)
@@ -59,8 +65,13 @@ void MainWindow::on_windowClosed(QWidget *closedWidget)
     });
 
     if (it !=openWindowsList.end()) {
-        // set the button enabled then erase the widget
         it->first->setEnabled(true);
         openWindowsList.erase(it);
     }
+}
+
+void MainWindow::set_selectedBuildingType(const TTERailType *railType)
+{
+    selectBuildType = railType;
+    tileMap->setCursorPreviewItem(railType);
 }

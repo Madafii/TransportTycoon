@@ -29,7 +29,7 @@ protected:
 
     void closeEvent(QCloseEvent *event) override;
 
-    // could lead to undefined behavior when calling in constructor of derived class
+    // could lead to undefined behavior when calling in constructor of derived class so disabled for now
     //virtual void initButtonIcons() = 0 ;
 };
 

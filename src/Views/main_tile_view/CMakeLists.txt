@@ -3,5 +3,5 @@ add_library(mainTileView
 )
 
 target_include_directories(mainTileView PUBLIC ".")
-target_link_libraries(mainTileView tiles Qt6::Core Qt6::Gui Qt6::Widgets)
+target_link_libraries(mainTileView tiles railNetwork Qt6::Core Qt6::Gui Qt6::Widgets)
 

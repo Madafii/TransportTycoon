@@ -4,5 +4,5 @@ add_library(buildItems
 )
 
 target_include_directories(buildItems PUBLIC ".")
-target_link_libraries(buildItems viewTemplates Qt6::Core Qt6::Widgets)
+target_link_libraries(buildItems viewTemplates railNetwork Qt6::Core Qt6::Widgets)
 

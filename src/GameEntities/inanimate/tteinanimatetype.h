@@ -9,7 +9,7 @@
 
 enum RAIL_ORIENTATION {
     HORIZONTAL_RAIL,
-    DIAGONAL_RAIL,
+    VERTICAL_RAIL,
     LEFTDOWNUPRIGHT_RAIL,
     LEFTUPRIGHTDOWN_RAIL, // TODO: add end of the line types when the rail is disconected aka has no adjacent tile make it look different(like a stop sign or something)
     RAIL_ORIENTATION_COUNT
@@ -36,8 +36,13 @@ enum TILE_TYPE {
     TILE_TYPE_COUNT
 };
 
+// a helper class for checking the base without using template params
+class TTEInanimateTypeBase {
+    virtual const QPixmap getImage() const = 0;
+};
+
 template <typename T1, typename T2>
-class TTEInanimateType
+class TTEInanimateType : public TTEInanimateTypeBase
 {
 public:
     TTEInanimateType(T1 type, T2 orientation, const QPixmap &image);

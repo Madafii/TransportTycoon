@@ -9,7 +9,6 @@ TTEBuilderMenuBase::TTEBuilderMenuBase(QWidget *parent)
 void TTEBuilderMenuBase::initWidget()
 {
     setWindowFlags(Qt::Tool | Qt::WindowCloseButtonHint);
-
     layout = new QHBoxLayout(this);
 
     buttonH = new QPushButton(this);
@@ -19,10 +18,16 @@ void TTEBuilderMenuBase::initWidget()
     buttonH->setFixedSize(baseSize);
     buttonV->setFixedSize(baseSize);
 
+    // set icon sizes
+    buttonH->setIconSize(baseSize);
+    buttonV->setIconSize(baseSize);
+
     layout->addWidget(buttonH);
     layout->addWidget(buttonV);
 
     setLayout(layout);
+
+    adjustSize();
 }
 
 void TTEBuilderMenuBase::closeEvent(QCloseEvent *event)
@@ -31,4 +36,3 @@ void TTEBuilderMenuBase::closeEvent(QCloseEvent *event)
 
     emit closeWindow(this);
 }
-
