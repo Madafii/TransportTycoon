@@ -6,21 +6,20 @@
 #include "tterailtype.h"
 
 class TTERailLoader;
-class QGraphicsItem;
 
 class TTERailBuilderMenu : public TTEBuilderMenuBase
 {
     Q_OBJECT
 public:
-    explicit TTERailBuilderMenu(QWidget *parent = nullptr);
+    explicit TTERailBuilderMenu(TTERailLoader *loader, QWidget *parent = nullptr);
 
     void setRailLoader(TTERailLoader *loader);
 
 signals:
-    void railSelected(const TTERailType *railType);
+    void railSelected(const TTEInanimateTypeBase &railType);
 
 private:
-    TTERailLoader *railLoader = nullptr;
+    TTERailLoader *railLoader;
     TTERailType *item = nullptr;
 
     void initButtonIcons();

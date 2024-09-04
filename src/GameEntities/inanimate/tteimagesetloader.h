@@ -6,10 +6,12 @@
 #include <QHash>
 #include <QDebug>
 #include <QElapsedTimer>
+#include <QObject>
 
 #include "imagereader.h"
 #include "tteinanimatetype.h"
 
+class TTEImageSetLoaderBase {};
 
 template <class C>
 class TTEImageSetLoader
@@ -23,7 +25,7 @@ public:
     TTEImageSetLoader(QString filePath, const quint16 typeSize, const quint16 orientationSize);
 
     void initTypes(const QString &filePath);
-    const C* getTypeAt(const EType type, const EOrientation orienation) const;
+    const C& getTypeAt(const EType type, const EOrientation orientation) const;
     const QList<C>& getTypes() const;
     const quint16& getTypeWidth() const { return typeWidth; }
     const quint16& getTypeHeight() const { return typeHeight; }
@@ -76,8 +78,6 @@ void TTEImageSetLoader<C>::initTypes(const QString &filePath)
                 break;
             }
         }
-        qDebug() << "TTEImageSetLoader: reached end of images the rest will be filled by blank QPixmap: " << filePath;
-        break;
     }
 
     // Fill the remaining slots with defaultPixmap
@@ -85,6 +85,7 @@ void TTEImageSetLoader<C>::initTypes(const QString &filePath)
         while (counterOrientation < orientationSize) {
             types.append(C(static_cast<EType>(counterType), static_cast<EOrientation>(counterOrientation), defaultPixmap));
             counterOrientation++;
+            qWarning() << QString("TTEImageSetLoader: added blank QPixmap for type pair: %1, %2").arg(counterType).arg(counterOrientation);
         }
         counterType++;
         counterOrientation = 0;
@@ -92,7 +93,7 @@ void TTEImageSetLoader<C>::initTypes(const QString &filePath)
 
     // Initialize typeMap once
     for (const C& type : types) {
-        typeMap.insert(std::make_pair(type.getType(), type.getOrientation()), &type);
+        typeMap.emplace(std::make_pair(type.getType(), type.getOrientation()), &type);
     }
 
     qDebug() << "TTEImageSetLoader: initializing images for types took: " << timer.elapsed() << "milliseconds";
@@ -105,9 +106,13 @@ const QList<C>& TTEImageSetLoader<C>::getTypes() const
 }
 
 template <typename C>
-const C* TTEImageSetLoader<C>::getTypeAt(const EType type, const EOrientation orientation) const
+const C& TTEImageSetLoader<C>::getTypeAt(const EType type, const EOrientation orientation) const
 {
-    return typeMap.value(std::pair<EType, EOrientation>(type, orientation), nullptr);
+    const C* typePtr = typeMap.value(std::make_pair(type, orientation), nullptr);
+    if (!typePtr) {
+        throw std::runtime_error("Type or orientation not found");
+    }
+    return *typePtr;
 }
 
 #endif // TTEIMAGESETLOADER_H

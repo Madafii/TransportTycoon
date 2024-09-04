@@ -8,6 +8,8 @@
 #include <QPushButton>
 #include <type_traits>
 
+#include "tteimagesetloader.h"
+
 class TTETileLoader;
 class TTERailLoader;
 class TTERailType;
@@ -36,7 +38,6 @@ private slots:
 
 public slots:
     void on_windowClosed(QWidget* closedWidget);
-    void set_selectedBuildingType(const TTERailType *railType);
 
 private:
     Ui::MainWindow *ui;
@@ -49,12 +50,14 @@ private:
     std::vector<buttonWindowPair> openWindowsList;
 
     void initMainView();
+    // TODO: implement on clicking delete on keyboard
+    void clearOpenedWindows();
 
     template <typename T>
     inline bool isOpenWindow();
     template <typename T>
     inline T* getOpenWindow();
-    template <typename T>
+    template <typename T, typename TLoader>
     void createBuildWindow(QPushButton *button);
 
     bool buildRail = false;
@@ -89,11 +92,12 @@ inline T* MainWindow::getOpenWindow()
     return nullptr;
 }
 
+// TODO: might delete idk if this shit useful maybe just overcomplicating
 ///
 /// \brief MainWindow::createBuildWindow Creates a build menu if it is not already open.
 /// \param button The button associated with the object creation.
 ///
-template <typename T>
+template <typename T, typename TLoader>
 void MainWindow::createBuildWindow(QPushButton *button)
 {
     static_assert(std::is_base_of<TTEBuilderMenuBase, T>::value, "T must be derived from TTEBuilderMenuBase");

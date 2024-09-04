@@ -7,7 +7,7 @@ class QPixmap;
 class QString;
 
 namespace ImageReader {
-    QList<QPixmap> loadPixMapImagesFromFile(QString filePath);
+    QList<QPixmap> loadPixMapImagesFromFile(const QString &filePath);
 };
 
 #endif // IMAGEREADER_H

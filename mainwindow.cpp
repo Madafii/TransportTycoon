@@ -46,16 +46,39 @@ void MainWindow::on_pushButtonAddRail_clicked()
 
 void MainWindow::on_pushButtonRails_clicked()
 {
-    createBuildWindow<TTERailBuilderMenu>(ui->pushButtonRails);
-    if (TTERailBuilderMenu* openedRailBuilder = getOpenWindow<TTERailBuilderMenu>()) {
-        openedRailBuilder->setRailLoader(railLoader);
-        connect(openedRailBuilder, &TTERailBuilderMenu::railSelected, this, &MainWindow::set_selectedBuildingType);
+    // createBuildWindow<TTERailBuilderMenu, TTERailLoader>(ui->pushButtonRails);
+    if (isOpenWindow<TTERailBuilderMenu>()) {
+        qDebug() << "can not open windown because it is already open";
+        return;
     }
+
+    auto builderMenu = std::make_unique<TTERailBuilderMenu>(railLoader, this);
+    builderMenu->show();
+
+    const QRect buttonRect = ui->pushButtonRails->geometry();
+    const QPoint buttonGlobalPos = ui->pushButtonRails->mapToGlobal(QPoint(0, 0));
+
+    const int bx = buttonGlobalPos.x();
+    const int by = buttonGlobalPos.y() + buttonRect.height();
+    builderMenu->move(bx, by);
+
+    // setup connection for closing the window
+    connect(builderMenu.get(), &TTERailBuilderMenu::closeWindow, this, &MainWindow::on_windowClosed);
+
+    // move the menu to a opened window list
+    openWindowsList.push_back(buttonWindowPair(ui->pushButtonRails, std::move(builderMenu)));
+    ui->pushButtonRails->setEnabled(false);
+
+    // setup rail selection
+    connect(builderMenu.get(), &TTERailBuilderMenu::railSelected, tileMap, &TTEMainViewMap::setRailBuildItem);
+    // if (TTERailBuilderMenu* openedRailBuilder = getOpenWindow<TTERailBuilderMenu>()) {
+    //     connect(openedRailBuilder, &TTERailBuilderMenu::railSelected, tileMap, &TTEMainViewMap::setCursorPreviewItem);
+    // }
 }
 
 void MainWindow::on_pushButtonStreets_clicked()
 {
-    createBuildWindow<TTEStreetBuilderMenu>(ui->pushButtonStreets);
+    // createBuildWindow<TTEStreetBuilderMenu>(ui->pushButtonStreets);
 }
 
 void MainWindow::on_windowClosed(QWidget *closedWidget)
@@ -70,8 +93,3 @@ void MainWindow::on_windowClosed(QWidget *closedWidget)
     }
 }
 
-void MainWindow::set_selectedBuildingType(const TTERailType *railType)
-{
-    selectBuildType = railType;
-    tileMap->setCursorPreviewItem(railType);
-}

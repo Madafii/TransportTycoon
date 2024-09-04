@@ -11,12 +11,12 @@ TTEMainViewMap::TTEMainViewMap(QGraphicsScene *scene, int sizeX, int sizeY, TTET
     sizeX(sizeX),
     sizeY(sizeY)
 {
-    tileSize = tileLoader->getTypeAt(TILE_TYPE::GRASS, TILE_ORIENTATION::UP)->getImage().height();
+    tileSize = tileLoader->getTypeAt(TILE_TYPE::GRASS, TILE_ORIENTATION::UP).getImage().height();
 
     for (int x = 0; x < sizeX; x++) {
         for (int y = 0; y < sizeY; y++) {
-            const TTETileType *tileType = tileLoader->getTypeAt(TILE_TYPE::GRASS, TILE_ORIENTATION::UP);
-            const int &size = tileType->getImage().height();
+            const TTETileType &tileType = tileLoader->getTypeAt(TILE_TYPE::GRASS, TILE_ORIENTATION::UP);
+            const int &size = tileType.getImage().height();
             TTETile *tile = new TTETile(tileType, QRectF(x * size, y * size, size, size));
             //tile->setAcceptHoverEvents(true);
             tileList.append(tile);
@@ -27,8 +27,8 @@ TTEMainViewMap::TTEMainViewMap(QGraphicsScene *scene, int sizeX, int sizeY, TTET
     setMouseTracking(true);
 
     // setting up coursor Item
-    const TTETileType *tileType = tileLoader->getTypeAt(TILE_TYPE::GRASS, TILE_ORIENTATION::RIGHT);
-    const QPixmap &image = tileType->getImage();
+    const TTETileType &tileType = tileLoader->getTypeAt(TILE_TYPE::GRASS, TILE_ORIENTATION::RIGHT);
+    const QPixmap &image = tileType.getImage();
     cursorItem = new QGraphicsPixmapItem(image);
     cursorItem->setVisible(false);
     mapScene->addItem(cursorItem);
@@ -57,10 +57,10 @@ void TTEMainViewMap::setCursorPreviewVisible(bool visible)
     cursorItem->setVisible(visible);
 }
 
-void TTEMainViewMap::setCursorPreviewItem(const TTEInanimateTypeBase *type)
+void TTEMainViewMap::setRailBuildItem(const TTEInanimateTypeBase &type)
 {
     QPixmap image;
-    if (const TTERailType *railType = dynamic_cast<const TTERailType*>(type)) {
+    if (const TTERailType *railType = dynamic_cast<const TTERailType*>(&type)) {
         image = railType->getImage();
     }
     if (image.isNull()) {
@@ -69,8 +69,6 @@ void TTEMainViewMap::setCursorPreviewItem(const TTEInanimateTypeBase *type)
     }
     cursorItem->setPixmap(image);
     cursorItem->setVisible(true);
-    // mapScene->update();
-    // mapScene->addItem(cursorItem);
 }
 
 bool TTEMainViewMap::isCursorPreviewVisible()

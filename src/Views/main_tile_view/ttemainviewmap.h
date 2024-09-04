@@ -9,7 +9,7 @@
 #include "ttetileloader.h"
 
 class TTETileType;
-class TTEInanimateTypeBase;
+class TTERailType;
 
 class TTEMainViewMap : public QGraphicsView
 {
@@ -19,11 +19,13 @@ public:
     void initScene();
 
     void setCursorPreviewVisible(bool visible);
-    void setCursorPreviewItem(const TTEInanimateTypeBase *type);
     bool isCursorPreviewVisible();
     
     QList<TTETile*>& getTileList() { return tileList; }
     TTETile* getTileAt(int x, int y);
+
+public slots:
+    void setRailBuildItem(const TTEInanimateTypeBase &type);
 
 protected:
     void mouseMoveEvent(QMouseEvent *event) override;
