@@ -15,7 +15,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     // create image loaders for different types
     tileLoader = new TTETileLoader(qgetenv("TTEUSER") + "/images/test.png");
-    railLoader = new TTERailLoader(qgetenv("TTEUSER") + "/images/test.png");
+    railLoader = new TTERailLoader(qgetenv("TTEUSER") + "/images/TestRails.png");
 
     initMainView();
 }
@@ -64,13 +64,13 @@ void MainWindow::on_pushButtonRails_clicked()
 
     // setup connection for closing the window
     connect(builderMenu.get(), &TTERailBuilderMenu::closeWindow, this, &MainWindow::on_windowClosed);
+    connect(builderMenu.get(), &TTERailBuilderMenu::railSelected, tileMap, &TTEMainViewMap::setRailBuildItem);
 
     // move the menu to a opened window list
     openWindowsList.push_back(buttonWindowPair(ui->pushButtonRails, std::move(builderMenu)));
     ui->pushButtonRails->setEnabled(false);
 
     // setup rail selection
-    connect(builderMenu.get(), &TTERailBuilderMenu::railSelected, tileMap, &TTEMainViewMap::setRailBuildItem);
     // if (TTERailBuilderMenu* openedRailBuilder = getOpenWindow<TTERailBuilderMenu>()) {
     //     connect(openedRailBuilder, &TTERailBuilderMenu::railSelected, tileMap, &TTEMainViewMap::setCursorPreviewItem);
     // }

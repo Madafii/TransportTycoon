@@ -52,6 +52,12 @@ void TTEMainViewMap::mouseMoveEvent(QMouseEvent *event)
     }
 }
 
+void TTEMainViewMap::mousePressEvent(QMouseEvent *event)
+{
+    QGraphicsItem *hoveredItem = mapScene->itemAt(this->mapToScene(event->pos()), this->transform());
+
+}
+
 void TTEMainViewMap::setCursorPreviewVisible(bool visible)
 {
     cursorItem->setVisible(visible);
