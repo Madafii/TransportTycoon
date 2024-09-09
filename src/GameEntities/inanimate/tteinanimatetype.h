@@ -55,7 +55,9 @@ enum TILE_TYPE {
 
 // a helper class for checking the base without using template params
 class TTEInanimateTypeBase {
+public:
     virtual const QPixmap& getImage() const = 0;
+    virtual bool canIBuildThis(TTEInanimateTypeBase *type) = 0;
 };
 
 template <typename T1, typename T2>
@@ -69,7 +71,9 @@ public:
 
     T1 getType() const { return type; }
     T2 getOrientation() const { return orientation; }
-    const QPixmap& getImage() const { return image; }
+    const QPixmap& getImage() const override { return image; }
+
+    virtual bool canIBuildThis(TTEInanimateTypeBase *type) override = 0;
 
 private:
     T1 type;

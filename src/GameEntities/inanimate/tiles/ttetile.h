@@ -10,7 +10,6 @@ class TTETile : public TTEInanimateObject<TTETileType>
 
 public:
     TTETile(const TTETileType &tileType);
-
 private:
 };
 

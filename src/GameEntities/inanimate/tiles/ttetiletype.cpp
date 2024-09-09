@@ -5,3 +5,8 @@ TTETileType::TTETileType(const TILE_TYPE tileType, const TILE_ORIENTATION tileOr
 {
 
 }
+
+bool TTETileType::canIBuildThis(TTEInanimateTypeBase *type)
+{
+    return true;
+}

@@ -23,6 +23,7 @@ public:
     
     QList<TTETile*>& getTileList() { return tileList; }
     TTETile* getTileAt(int x, int y);
+    TTETile* getTileAtScen(const QPointF &pos);
 
 public slots:
     void setRailBuildItem(const TTEInanimateTypeBase &type);
@@ -45,10 +46,11 @@ private:
     QGraphicsPixmapItem *cursorItem;
 
     static constexpr double scaleFactor = 1.15;
+    static constexpr int tileSize = 50;
+
     QPointF accumulatedDelta;
 
     int sizeX, sizeY;
-    int tileSize;
     QList<TTETile*> tileList;
 };
 

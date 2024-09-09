@@ -18,7 +18,7 @@ TTEMainViewMap::TTEMainViewMap(QGraphicsScene *scene, int sizeX, int sizeY, TTET
     timer.start();
     // installEventFilter(this);
 
-    tileSize = tileLoader->getTypeAt(TILE_TYPE::GRASS, TILE_ORIENTATION::UP).getImage().height();
+    // tileSize = tileLoader->getTypeAt(TILE_TYPE::GRASS, TILE_ORIENTATION::UP).getImage().height();
 
     for (int x = 0; x < sizeX; x++) {
         for (int y = 0; y < sizeY; y++) {
@@ -40,8 +40,8 @@ TTEMainViewMap::TTEMainViewMap(QGraphicsScene *scene, int sizeX, int sizeY, TTET
     // setup all the view settings
     setMouseTracking(true);
     setTransformationAnchor(QGraphicsView::AnchorUnderMouse);
-    //setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    //setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
     // setting up a coursor Item
     cursorItem = new QGraphicsPixmapItem(QPixmap(50, 50));
@@ -64,29 +64,52 @@ void TTEMainViewMap::initScene()
 
 // bool TTEMainViewMap::eventFilter(QObject *obj, QEvent *event)
 // {
-//     if (event->type() == QEvent::MouseButtonPress)
-//     {
-//         QMouseEvent* mouse_event = static_cast<QMouseEvent*>(event);
-//         // Enter here any button you like
-//         if (mouse_event->button() == Qt::MiddleButton)
-//         {
-//             // temporarly enable dragging mode
-//             this->setDragMode(QGraphicsView::DragMode::ScrollHandDrag);
-//             // emit a left mouse click (the default button for the drag mode)
-//             QMouseEvent* pressEvent = new QMouseEvent(QEvent::GraphicsSceneMousePress,
-//                                                       mouse_event->position(), mouse_event->globalPosition(), Qt::MouseButton::LeftButton,
-//                                                       Qt::MouseButton::LeftButton, Qt::KeyboardModifier::NoModifier);
-
-//             this->mousePressEvent(pressEvent);
-//         }
-//         else if (event->type() == QEvent::MouseButtonRelease)
-//         {
-//             // disable drag mode if dragging is finished
-//             this->setDragMode(QGraphicsView::DragMode::NoDrag);
-//         }
-//     }
-//     return false;
+//
 // }
+
+void TTEMainViewMap::mousePressEvent(QMouseEvent *event)
+{
+    switch(event->button()) {
+    case Qt::LeftButton: {
+        // QGraphicsItem *clickedItem = mapScene->itemAt(mapToScene(event->pos()), transform());
+        // TODO: maybe add dynamic_cast for non movable objects
+
+        // get the head tile
+        TTETile *tile = getTileAtScen(mapToScene(event->pos()));
+        TTEInanimateObjectBase *headObj = tile;
+        while (headObj->next.get() != nullptr) {
+            headObj = headObj->next.get();
+        }
+
+        // item can be placed and is of rail type
+        if (const TTERailType *railType = dynamic_cast<const TTERailType*>(selectedType)) {
+            const TTERailType &railTypeRef = *railType;
+
+            if (!TTEBuildHelper::buildHereAllowed(*headObj, railTypeRef)) {
+                qDebug() << "can't build here";
+                return;
+            }
+
+            std::unique_ptr<TTERail> rail = std::make_unique<TTERail>(railTypeRef);
+            rail->setPos(tile->pos());
+            rail->setZValue(2);
+            mapScene->addItem(rail.get());
+            headObj->next = std::move(rail);
+        }
+        event->accept();
+        break;
+    }
+    case Qt::RightButton:
+        // Start panning
+        lastPanPoint = event->pos();
+        setCursor(Qt::ClosedHandCursor);
+        event->accept();
+        break;
+    default:
+        QGraphicsView::mousePressEvent(event);
+        break;
+    }
+}
 
 void TTEMainViewMap::mouseMoveEvent(QMouseEvent *event)
 {
@@ -95,11 +118,11 @@ void TTEMainViewMap::mouseMoveEvent(QMouseEvent *event)
     switch (event->buttons()) {
     case Qt::RightButton: {
         // Calculate distance moved and accumulate
-        QPointF currentDelta = mapToScene(event->pos()) - mapToScene(lastPanPoint);
+        const QPointF currentDelta = mapToScene(event->pos()) - mapToScene(lastPanPoint);
         accumulatedDelta += currentDelta * transform().m11();
 
-        int moveX = static_cast<int>(accumulatedDelta.x());
-        int moveY = static_cast<int>(accumulatedDelta.y());
+        const int moveX = static_cast<int>(accumulatedDelta.x());
+        const int moveY = static_cast<int>(accumulatedDelta.y());
 
         if (std::abs(moveX) > 0 || std::abs(moveY) > 0) {
             QScrollBar* hScrollBar = horizontalScrollBar();
@@ -132,40 +155,6 @@ void TTEMainViewMap::mouseMoveEvent(QMouseEvent *event)
             viewport()->update();
         }
         lastHoveredItem = hoveredItem;
-    }
-}
-
-void TTEMainViewMap::mousePressEvent(QMouseEvent *event)
-{
-    switch(event->button()) {
-    case Qt::LeftButton: {
-        QGraphicsItem *hoveredItem = mapScene->itemAt(this->mapToScene(event->pos()), this->transform());
-
-        // TODO: add logic if item can be placed here with the buildHelper qgraphicsitem_cast<>()
-        if (false) {
-
-        }
-
-        // item can be placed and is of rail type
-        if (const TTERailType *railType = dynamic_cast<const TTERailType*>(selectedType)) {
-            const TTERailType &railTypeRef = *railType;
-            TTERail *rail = new TTERail(railTypeRef);
-            rail->setPos(hoveredItem->pos());
-            rail->setZValue(2);
-            mapScene->addItem(rail);
-        }
-        event->accept();
-        break;
-    }
-    case Qt::RightButton:
-        // Start panning
-        lastPanPoint = event->pos();
-        setCursor(Qt::ClosedHandCursor);
-        event->accept();
-        break;
-    default:
-        QGraphicsView::mousePressEvent(event);
-        break;
     }
 }
 
@@ -237,7 +226,17 @@ bool TTEMainViewMap::isCursorPreviewVisible()
     return cursorItem->isVisible();
 }
 
+///
+/// \brief TTEMainViewMap::getTileAt gets the tile maped with each x and y combination to a new element.
+/// \param x
+/// \param y
+/// \return
+///
 TTETile* TTEMainViewMap::getTileAt(int x, int y)
 {
-    return tileList.at(x * tileSize + y * tileSize);
+    return tileList.at(y + x * sizeX);
+}
+
+TTETile* TTEMainViewMap::getTileAtScen(const QPointF &pos) {
+    return getTileAt(static_cast<int>(pos.x()/tileSize), static_cast<int>(pos.y()/tileSize));
 }
