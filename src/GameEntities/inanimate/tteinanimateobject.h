@@ -14,13 +14,12 @@ class TTEInanimateObject : public QGraphicsItem
     // Ensure that C is derived from TTEInanimateType<T1, T2>
     static_assert(std::is_base_of<TTEInanimateType<typename C::FirstType, typename C::SecondType>, C>::value, "C must inherit from TTEInanimateType<T1, T2>");
 public:
-    TTEInanimateObject(const C &tileType, QRectF rect);
+    TTEInanimateObject(const C &tileType);
 
     virtual QRectF boundingRect() const override;
     virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
 
     const C &type;
-    QRectF rect;
 
 protected:
     //void hoverEnterEvent(QGraphicsSceneHoverEvent *event) override;
@@ -31,8 +30,8 @@ signals:
 };
 
 template<typename C>
-TTEInanimateObject<C>::TTEInanimateObject(const C &tileType, QRectF rect)
-    : type(tileType), rect(rect)
+TTEInanimateObject<C>::TTEInanimateObject(const C &tileType)
+    : type(tileType)
 {
 
 }

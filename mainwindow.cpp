@@ -36,7 +36,6 @@ void MainWindow::initMainView()
     tileMap->setScene(scene);
     tileMap->setBackgroundBrush(Qt::lightGray);
     tileMap->setRenderHint(QPainter::Antialiasing);
-    //ui->graphicsViewMain->setDragMode(QGraphicsView::ScrollHandDrag);
 }
 
 void MainWindow::on_pushButtonAddRail_clicked()

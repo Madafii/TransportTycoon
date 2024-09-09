@@ -28,16 +28,24 @@ public slots:
     void setRailBuildItem(const TTEInanimateTypeBase &type);
 
 protected:
+    // bool eventFilter(QObject *obj, QEvent *event) override;
+    // bool event(QEvent *event) override;
     void mouseMoveEvent(QMouseEvent *event) override;
     void mousePressEvent(QMouseEvent *event) override;
-    //void buildPreview();
+    void mouseReleaseEvent(QMouseEvent *event) override;
+    void wheelEvent(QWheelEvent *event) override;
 
 private:
-    TTETileLoader *tileLoader;
     QGraphicsScene *mapScene;
+    TTETileLoader *tileLoader;
 
-    TTEInanimateTypeBase *selectedType;
+    QPoint lastPanPoint;
+    QGraphicsItem *lastHoveredItem = nullptr;
+    const TTEInanimateTypeBase *selectedType = nullptr;
     QGraphicsPixmapItem *cursorItem;
+
+    static constexpr double scaleFactor = 1.15;
+    QPointF accumulatedDelta;
 
     int sizeX, sizeY;
     int tileSize;

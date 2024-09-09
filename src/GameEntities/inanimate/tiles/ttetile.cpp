@@ -1,7 +1,7 @@
 #include "ttetile.h"
 
-TTETile::TTETile(const TTETileType &tileType, QRectF rect)
-    : TTEInanimateObject<TTETileType>(tileType, rect)
+TTETile::TTETile(const TTETileType &tileType)
+    : TTEInanimateObject<TTETileType>(tileType)
 {
 
 }
