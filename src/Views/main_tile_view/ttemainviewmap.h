@@ -26,7 +26,7 @@ public:
     TTETile* getTileAtScen(const QPointF &pos);
 
 public slots:
-    void setRailBuildItem(const TTEInanimateTypeBase &type);
+    void setBuildItem(const TTEInanimateTypeBase &type);
 
 protected:
     // bool eventFilter(QObject *obj, QEvent *event) override;

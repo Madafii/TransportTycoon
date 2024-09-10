@@ -1,5 +1,6 @@
 add_subdirectory(rail_network)
 add_subdirectory(tiles)
+add_subdirectory(streets)
 
 add_library(inanimate
     tteinanimateobject.h tteinanimateobject.cpp

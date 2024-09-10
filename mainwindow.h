@@ -8,9 +8,8 @@
 #include <QPushButton>
 #include <type_traits>
 
-#include "tteimagesetloader.h"
-
 class TTETileLoader;
+class TTEStreetLoader;
 class TTERailLoader;
 class TTERailType;
 class TTEMainViewMap;
@@ -43,6 +42,7 @@ private:
     Ui::MainWindow *ui;
     TTETileLoader *tileLoader;
     TTERailLoader *railLoader;
+    TTEStreetLoader *streetLoader;
     TTEMainViewMap *tileMap;
     const TTERailType *selectBuildType = nullptr;
 

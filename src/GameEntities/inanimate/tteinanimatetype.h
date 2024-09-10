@@ -37,6 +37,18 @@ enum RAIL_TYPE {
     RAIL_TYPE_COUNT
 };
 
+enum STREET_ORIENTATION {
+    HORIZONTAL_STREET,
+    VERTICAL_STREET,
+    STREET_ORIENTATION_COUNT
+};
+
+enum STREET_TYPE {
+    CONCRETE_STANDARD,
+    CONCRETE_FANCY,
+    STREET_TYPE_COUNT
+};
+
 enum TILE_ORIENTATION {
     UP,
     RIGHT,
@@ -57,7 +69,7 @@ enum TILE_TYPE {
 class TTEInanimateTypeBase {
 public:
     virtual const QPixmap& getImage() const = 0;
-    virtual bool canIBuildThis(TTEInanimateTypeBase *type) = 0;
+    // virtual bool canIBuildThis(TTEInanimateTypeBase *type) = 0;
 };
 
 template <typename T1, typename T2>
@@ -73,7 +85,7 @@ public:
     T2 getOrientation() const { return orientation; }
     const QPixmap& getImage() const override { return image; }
 
-    virtual bool canIBuildThis(TTEInanimateTypeBase *type) override = 0;
+    // virtual bool canIBuildThis(TTEInanimateTypeBase *type) override = 0;
 
 private:
     T1 type;

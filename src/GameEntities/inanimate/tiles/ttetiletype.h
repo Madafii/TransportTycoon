@@ -11,7 +11,7 @@ class TTETileType : public TTEInanimateType<TILE_TYPE, TILE_ORIENTATION>
 public:
     TTETileType(const TILE_TYPE tileType, const TILE_ORIENTATION tileOrientation, const QPixmap &tileImage);
 
-    virtual bool canIBuildThis(TTEInanimateTypeBase *type) override;
+    // virtual bool canIBuildThis(TTEInanimateTypeBase *type) override;
 private:
 };
 

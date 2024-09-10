@@ -5,8 +5,3 @@ TTERailType::TTERailType(RAIL_TYPE railType, RAIL_ORIENTATION railOrientation, c
 {
 
 }
-
-bool TTERailType::canIBuildThis(TTEInanimateTypeBase *type)
-{
-    return true;
-}

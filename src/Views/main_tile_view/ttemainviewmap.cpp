@@ -5,6 +5,8 @@
 
 #include "tterailtype.h"
 #include "tterail.h"
+#include "ttestreettype.h"
+#include "ttestreet.h"
 #include "ttebuildhelper.h"
 
 TTEMainViewMap::TTEMainViewMap(QGraphicsScene *scene, int sizeX, int sizeY, TTETileLoader *tileLoader, QWidget *parent) :
@@ -205,13 +207,16 @@ void TTEMainViewMap::setCursorPreviewVisible(bool visible)
     cursorItem->setVisible(visible);
 }
 
-void TTEMainViewMap::setRailBuildItem(const TTEInanimateTypeBase &type)
+void TTEMainViewMap::setBuildItem(const TTEInanimateTypeBase &type)
 {
     selectedType = &type;
 
     QPixmap image;
     if (const TTERailType *railType = dynamic_cast<const TTERailType*>(&type)) {
         image = railType->getImage();
+    }
+    else if (const TTEStreetType *streetType = dynamic_cast<const TTEStreetType*>(&type)) {
+        image = streetType->getImage();
     }
     if (image.isNull()) {
         qWarning() << "tried to set image to previewCursor";

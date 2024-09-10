@@ -3,6 +3,7 @@
 
 #include "ttetileloader.h"
 #include "tterailloader.h"
+#include "ttestreetloader.h"
 #include "ttemainviewmap.h"
 #include "tterailbuildermenu.h"
 #include "ttestreetbuildermenu.h"
@@ -13,9 +14,12 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
+    const QString userPath = qgetenv("TTEUSER");
+
     // create image loaders for different types
-    tileLoader = new TTETileLoader(qgetenv("TTEUSER") + "/images/test.png");
-    railLoader = new TTERailLoader(qgetenv("TTEUSER") + "/images/TestRails.png");
+    tileLoader = new TTETileLoader(userPath + "/images/test.png");
+    railLoader = new TTERailLoader(userPath + "/images/TestRails.png");
+    streetLoader = new TTEStreetLoader(userPath + "/images/TestStreet.png");
 
     initMainView();
 }
@@ -63,13 +67,12 @@ void MainWindow::on_pushButtonRails_clicked()
 
     // setup connection for closing the window
     connect(builderMenu.get(), &TTERailBuilderMenu::closeWindow, this, &MainWindow::on_windowClosed);
-    connect(builderMenu.get(), &TTERailBuilderMenu::railSelected, tileMap, &TTEMainViewMap::setRailBuildItem);
+    connect(builderMenu.get(), &TTERailBuilderMenu::railSelected, tileMap, &TTEMainViewMap::setBuildItem);
 
     // move the menu to a opened window list
     openWindowsList.push_back(buttonWindowPair(ui->pushButtonRails, std::move(builderMenu)));
     ui->pushButtonRails->setEnabled(false);
-
-    // setup rail selection
+ // setup rail selection
     // if (TTERailBuilderMenu* openedRailBuilder = getOpenWindow<TTERailBuilderMenu>()) {
     //     connect(openedRailBuilder, &TTERailBuilderMenu::railSelected, tileMap, &TTEMainViewMap::setCursorPreviewItem);
     // }
@@ -77,7 +80,28 @@ void MainWindow::on_pushButtonRails_clicked()
 
 void MainWindow::on_pushButtonStreets_clicked()
 {
-    // createBuildWindow<TTEStreetBuilderMenu>(ui->pushButtonStreets);
+    if (isOpenWindow<TTEStreetBuilderMenu>()) {
+        qDebug() << "can not open windown because it is already open";
+        return;
+    }
+
+    auto builderMenu = std::make_unique<TTEStreetBuilderMenu>(streetLoader, this);
+    builderMenu->show();
+
+    const QRect buttonRect = ui->pushButtonStreets->geometry();
+    const QPoint buttonGlobalPos = ui->pushButtonStreets->mapToGlobal(QPoint(0, 0));
+
+    const int bx = buttonGlobalPos.x();
+    const int by = buttonGlobalPos.y() + buttonRect.height();
+    builderMenu->move(bx, by);
+
+    // setup connection for closing the window
+    connect(builderMenu.get(), &TTEStreetBuilderMenu::closeWindow, this, &MainWindow::on_windowClosed);
+    connect(builderMenu.get(), &TTEStreetBuilderMenu::streetSelected, tileMap, &TTEMainViewMap::setBuildItem);
+
+    // move the menu to a opened window list
+    openWindowsList.push_back(buttonWindowPair(ui->pushButtonStreets, std::move(builderMenu)));
+    ui->pushButtonStreets->setEnabled(false);
 }
 
 void MainWindow::on_windowClosed(QWidget *closedWidget)
