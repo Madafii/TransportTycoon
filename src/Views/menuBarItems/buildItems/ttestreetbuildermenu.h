@@ -1,6 +1,7 @@
 #ifndef TTESTREETBUILDERMENU_H
 #define TTESTREETBUILDERMENU_H
 
+#include "ttebuildhelper.h"
 #include "ttebuildermenubase.h"
 #include "ttestreetloader.h"
 #include "ttestreettype.h"
@@ -13,7 +14,7 @@ public:
 
     void setStreetLoader(TTEStreetLoader *loader);
 signals:
-    void streetSelected(const TTEInanimateTypeBase &streetType);
+    void streetSelected(const TTEBuildHelper::typeVariant &streetType);
 
 private:
     TTEStreetLoader *streetLoader;

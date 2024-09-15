@@ -7,6 +7,7 @@
 
 #include "ttetile.h"
 #include "ttetileloader.h"
+#include "ttebuildhelper.h"
 
 class TTETileType;
 class TTERailType;
@@ -15,6 +16,8 @@ class TTEMainViewMap : public QGraphicsView
 {
 public:
     TTEMainViewMap(QGraphicsScene *scene, int size_x, int size_y, TTETileLoader *tileLoader, QWidget *parent = nullptr);
+
+    using typeVariant = TTEBuildHelper::typeVariant;
 
     void initScene();
 
@@ -26,7 +29,7 @@ public:
     TTETile* getTileAtScen(const QPointF &pos);
 
 public slots:
-    void setBuildItem(const TTEInanimateTypeBase &type);
+    void setBuildItem(const typeVariant &type);
 
 protected:
     // bool eventFilter(QObject *obj, QEvent *event) override;
@@ -42,7 +45,8 @@ private:
 
     QPoint lastPanPoint;
     QGraphicsItem *lastHoveredItem = nullptr;
-    const TTEInanimateTypeBase *selectedType = nullptr;
+    typeVariant selectedType;
+    // const TTEInanimateTypeBase *selectedType = nullptr;
     QGraphicsPixmapItem *cursorItem;
 
     static constexpr double scaleFactor = 1.15;
@@ -52,6 +56,28 @@ private:
 
     int sizeX, sizeY;
     QList<TTETile*> tileList;
+
+    template <typename CType, typename CObj>
+    void buildObj(TTEInanimateObjectBase &headObj, const QPointF &buildPos);
 };
+
+template <typename CType, typename CObj>
+void TTEMainViewMap::buildObj(TTEInanimateObjectBase &headObj, const QPointF &buildPos)
+{
+    static_assert(std::is_base_of<TTEInanimateTypeBase, CType>::value, "CType has to be inherited from TTEInanimateTypeBase");
+
+    auto &typeRef = std::get<CType>(selectedType);
+
+    if (!TTEBuildHelper::buildHereAllowed(headObj, typeRef)) {
+        qDebug() << "can't build here";
+        return;
+    }
+
+    auto newBuildObj = std::make_unique<CObj>(typeRef);
+    newBuildObj->setPos(buildPos);
+    newBuildObj->setZValue(2);
+    mapScene->addItem(newBuildObj.get());
+    headObj.next = std::move(newBuildObj);
+}
 
 #endif // TTEMAINVIEWMAPH_H

@@ -6,6 +6,22 @@
 
 #include "tteinanimatetype.h"
 
+enum TILE_ORIENTATION {
+    UP,
+    RIGHT,
+    DOWN,
+    LEFT,
+    TILE_ORIENTATION_COUNT
+};
+
+enum TILE_TYPE {
+    GRASS,
+    DESERT,
+    EXTRA,
+    NONE_TILE,
+    TILE_TYPE_COUNT
+};
+
 class TTETileType : public TTEInanimateType<TILE_TYPE, TILE_ORIENTATION>
 {
 public:

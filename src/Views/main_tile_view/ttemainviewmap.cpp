@@ -7,15 +7,16 @@
 #include "tterail.h"
 #include "ttestreettype.h"
 #include "ttestreet.h"
-#include "ttebuildhelper.h"
 
 TTEMainViewMap::TTEMainViewMap(QGraphicsScene *scene, int sizeX, int sizeY, TTETileLoader *tileLoader, QWidget *parent) :
     QGraphicsView(scene, parent),
-    tileLoader(tileLoader),
     mapScene(scene),
+    tileLoader(tileLoader),
+    selectedType(tileLoader->getTypeAt(GRASS, UP)),
     sizeX(sizeX),
     sizeY(sizeY)
 {
+    //selectedType = tileLoader->getTypeAt(GRASS, UP);
     QElapsedTimer timer;
     timer.start();
     // installEventFilter(this);
@@ -74,7 +75,8 @@ void TTEMainViewMap::mousePressEvent(QMouseEvent *event)
     switch(event->button()) {
     case Qt::LeftButton: {
         // QGraphicsItem *clickedItem = mapScene->itemAt(mapToScene(event->pos()), transform());
-        // TODO: maybe add dynamic_cast for non movable objects
+        // TODO: maybe add dynamic_cast for non movable objects and block then.
+        // So rule is nothing can be build on animate objects, like trains...
 
         // get the head tile
         TTETile *tile = getTileAtScen(mapToScene(event->pos()));
@@ -83,21 +85,20 @@ void TTEMainViewMap::mousePressEvent(QMouseEvent *event)
             headObj = headObj->next.get();
         }
 
-        // item can be placed and is of rail type
-        if (const TTERailType *railType = dynamic_cast<const TTERailType*>(selectedType)) {
-            const TTERailType &railTypeRef = *railType;
+        // using SelectedTypeVariant = std::variant<TTERailType*, TTEStreetType*>;
 
-            if (!TTEBuildHelper::buildHereAllowed(*headObj, railTypeRef)) {
-                qDebug() << "can't build here";
-                return;
-            }
-
-            std::unique_ptr<TTERail> rail = std::make_unique<TTERail>(railTypeRef);
-            rail->setPos(tile->pos());
-            rail->setZValue(2);
-            mapScene->addItem(rail.get());
-            headObj->next = std::move(rail);
+        if (auto railType = std::get_if<TTERailType>(&selectedType)) {
+            buildObj<TTERailType, TTERail>(*headObj, tile->pos());
+        } else if (auto streetType = std::get_if<TTEStreetType>(&selectedType)) {
+            buildObj<TTEStreetType, TTEStreet>(*headObj, tile->pos());
         }
+        // item can be placed and is of rail type
+        // if (const TTERailType *railType = dynamic_cast<const TTERailType*>(selectedType)) {
+        //     buildObj<TTERailType, TTERail>(*headObj, tile->pos());
+        // }
+        // else if (const TTEStreetType *streetType = dynamic_cast<const TTEStreetType*>(selectedType)) {
+        //     buildObj<TTEStreetType, TTEStreet>(*headObj, tile->pos());
+        // }
         event->accept();
         break;
     }
@@ -207,17 +208,22 @@ void TTEMainViewMap::setCursorPreviewVisible(bool visible)
     cursorItem->setVisible(visible);
 }
 
-void TTEMainViewMap::setBuildItem(const TTEInanimateTypeBase &type)
+void TTEMainViewMap::setBuildItem(const typeVariant &type)
 {
-    selectedType = &type;
+    selectedType = type;
 
     QPixmap image;
-    if (const TTERailType *railType = dynamic_cast<const TTERailType*>(&type)) {
+    if (auto railType = std::get_if<TTERailType>(&selectedType)) {
         image = railType->getImage();
-    }
-    else if (const TTEStreetType *streetType = dynamic_cast<const TTEStreetType*>(&type)) {
+    } else if (auto streetType = std::get_if<TTEStreetType>(&selectedType)) {
         image = streetType->getImage();
     }
+    // if (const TTERailType *railType = dynamic_cast<const TTERailType*>(&type)) {
+    //     image = railType->getImage();
+    // }
+    // else if (const TTEStreetType *streetType = dynamic_cast<const TTEStreetType*>(&type)) {
+    //     image = streetType->getImage();
+    // }
     if (image.isNull()) {
         qWarning() << "tried to set image to previewCursor";
         return;

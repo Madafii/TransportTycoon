@@ -1,4 +1,6 @@
 #include "ttestreetbuildermenu.h"
+#include "tterailtype.h"
+#include "ttetiletype.h"
 
 TTEStreetBuilderMenu::TTEStreetBuilderMenu(TTEStreetLoader *loader, QWidget *parent)
     : TTEBuilderMenuBase(parent), streetLoader(loader)

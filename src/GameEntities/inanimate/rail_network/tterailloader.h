@@ -9,7 +9,7 @@ class QString;
 class TTERailLoader : public TTEImageSetLoader<TTERailType>
 {
 public:
-    TTERailLoader(const QString filePath, const quint16 typeSize = RAIL_TYPE_COUNT, const quint16 orientationSize = RAIL_ORIENTATION_COUNT);
+    TTERailLoader(const QString filePath, const quint16 typeSize = RAIL_TYPE_END, const quint16 orientationSize = RAIL_ORIENTATION_END);
 
 private:
 };

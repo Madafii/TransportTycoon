@@ -8,11 +8,13 @@
 #include <QPushButton>
 #include <type_traits>
 
+#include "ttebuildhelper.h"
+#include "ttemainviewmap.h"
+
 class TTETileLoader;
 class TTEStreetLoader;
 class TTERailLoader;
 class TTERailType;
-class TTEMainViewMap;
 class TTEBuilderMenuBase;
 class TTEInanimateTypeBase;
 
@@ -46,7 +48,7 @@ private:
     TTEMainViewMap *tileMap;
     const TTERailType *selectBuildType = nullptr;
 
-    typedef std::pair<QPushButton*, std::unique_ptr<QWidget>> buttonWindowPair;
+    using buttonWindowPair = std::pair<QPushButton*, std::unique_ptr<QWidget>>;
     std::vector<buttonWindowPair> openWindowsList;
 
     void initMainView();

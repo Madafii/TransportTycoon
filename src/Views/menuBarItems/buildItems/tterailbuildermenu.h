@@ -2,6 +2,7 @@
 #define TTERAILBUILDERMENU_H
 
 #include <QWidget>
+#include "ttebuildhelper.h"
 #include "ttebuildermenubase.h"
 #include "tterailtype.h"
 
@@ -16,7 +17,7 @@ public:
     void setRailLoader(TTERailLoader *loader);
 
 signals:
-    void railSelected(const TTEInanimateTypeBase &railType);
+    void railSelected(const TTEBuildHelper::typeVariant &railType);
 
 private:
     TTERailLoader *railLoader;
