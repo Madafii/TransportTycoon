@@ -66,14 +66,14 @@ void TTEMainViewMap::buildObj(TTEInanimateObjectBase &headObj, const QPointF &bu
 {
     static_assert(std::is_base_of<TTEInanimateTypeBase, CType>::value, "CType has to be inherited from TTEInanimateTypeBase");
 
-    auto &typeRef = std::get<CType>(selectedType);
+    auto *typeRef = std::get<CType*>(selectedType);
 
-    if (!TTEBuildHelper::buildHereAllowed(headObj, typeRef)) {
+    if (!TTEBuildHelper::buildHereAllowed(headObj, *typeRef)) {
         qDebug() << "can't build here";
         return;
     }
 
-    auto newBuildObj = std::make_unique<CObj>(typeRef);
+    auto newBuildObj = std::make_unique<CObj>(*typeRef);
     newBuildObj->setPos(buildPos);
     newBuildObj->setZValue(2);
     mapScene->addItem(newBuildObj.get());

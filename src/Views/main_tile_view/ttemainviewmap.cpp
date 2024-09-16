@@ -12,7 +12,6 @@ TTEMainViewMap::TTEMainViewMap(QGraphicsScene *scene, int sizeX, int sizeY, TTET
     QGraphicsView(scene, parent),
     mapScene(scene),
     tileLoader(tileLoader),
-    selectedType(tileLoader->getTypeAt(GRASS, UP)),
     sizeX(sizeX),
     sizeY(sizeY)
 {
@@ -218,6 +217,7 @@ void TTEMainViewMap::setBuildItem(const typeVariant &type)
     } else if (auto streetType = std::get_if<TTEStreetType>(&selectedType)) {
         image = streetType->getImage();
     }
+    // changed below to variant
     // if (const TTERailType *railType = dynamic_cast<const TTERailType*>(&type)) {
     //     image = railType->getImage();
     // }
