@@ -86,9 +86,9 @@ void TTEMainViewMap::mousePressEvent(QMouseEvent *event)
 
         // using SelectedTypeVariant = std::variant<TTERailType*, TTEStreetType*>;
 
-        if (auto railType = std::get_if<TTERailType>(&selectedType)) {
+        if (auto railType = std::get_if<const TTERailType*>(&selectedType)) {
             buildObj<TTERailType, TTERail>(*headObj, tile->pos());
-        } else if (auto streetType = std::get_if<TTEStreetType>(&selectedType)) {
+        } else if (auto streetType = std::get_if<const TTEStreetType*>(&selectedType)) {
             buildObj<TTEStreetType, TTEStreet>(*headObj, tile->pos());
         }
         // item can be placed and is of rail type
@@ -207,15 +207,15 @@ void TTEMainViewMap::setCursorPreviewVisible(bool visible)
     cursorItem->setVisible(visible);
 }
 
-void TTEMainViewMap::setBuildItem(const typeVariant &type)
+void TTEMainViewMap::setBuildItem(typeVariant type)
 {
     selectedType = type;
 
     QPixmap image;
-    if (auto railType = std::get_if<TTERailType>(&selectedType)) {
-        image = railType->getImage();
-    } else if (auto streetType = std::get_if<TTEStreetType>(&selectedType)) {
-        image = streetType->getImage();
+    if (auto railType = std::get_if<const TTERailType*>(&selectedType)) {
+        image = (*railType)->getImage();
+    } else if (auto streetType = std::get_if<const TTEStreetType*>(&selectedType)) {
+        image = (*streetType)->getImage();
     }
     // changed below to variant
     // if (const TTERailType *railType = dynamic_cast<const TTERailType*>(&type)) {

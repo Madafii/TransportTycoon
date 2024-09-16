@@ -17,7 +17,7 @@ public:
     void setRailLoader(TTERailLoader *loader);
 
 signals:
-    void railSelected(const TTEBuildHelper::typeVariant *railType);
+    void railSelected(TTEBuildHelper::typeVariant railType);
 
 private:
     TTERailLoader *railLoader;

@@ -26,8 +26,8 @@ void TTERailBuilderMenu::initButtonConnections()
 void TTERailBuilderMenu::createButtonConnection(const QPushButton *button, const RAIL_ORIENTATION orientation)
 {
     connect(button, &QPushButton::clicked, this, [this, orientation]() {
-        const TTERailType &railType = railLoader->getTypeAt(ELECTRIC, orientation);
-        emit railSelected(&railType);
+        const TTERailType *railType = railLoader->getTypePtrAt(ELECTRIC, orientation);
+        emit railSelected(railType);
     });
 }
 

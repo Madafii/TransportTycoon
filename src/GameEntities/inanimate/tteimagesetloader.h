@@ -25,6 +25,7 @@ public:
     TTEImageSetLoader(QString filePath, const quint16 typeSize, const quint16 orientationSize);
 
     void initTypes(const QString &filePath);
+    const C* getTypePtrAt(const EType type, const EOrientation orientation) const;
     const C& getTypeAt(const EType type, const EOrientation orientation) const;
     const QList<C>& getTypes() const;
     const quint16& getTypeWidth() const { return typeWidth; }
@@ -106,13 +107,22 @@ const QList<C>& TTEImageSetLoader<C>::getTypes() const
 }
 
 template <typename C>
-const C& TTEImageSetLoader<C>::getTypeAt(const EType type, const EOrientation orientation) const
+const C* TTEImageSetLoader<C>::getTypePtrAt(const EType type, const EOrientation orientation) const
 {
     const C* typePtr = typeMap.value(std::make_pair(type, orientation), nullptr);
     if (!typePtr) {
         throw std::runtime_error("Type or orientation not found");
     }
-    return *typePtr;
+    return typePtr;
 }
+
+template <typename C>
+const C& TTEImageSetLoader<C>::getTypeAt(const EType type, const EOrientation orientation) const
+{
+    return *getTypePtrAt(type, orientation);
+}
+
+
+
 
 #endif // TTEIMAGESETLOADER_H

@@ -14,7 +14,7 @@ public:
 
     void setStreetLoader(TTEStreetLoader *loader);
 signals:
-    void streetSelected(const TTEBuildHelper::typeVariant &streetType);
+    void streetSelected(TTEBuildHelper::typeVariant streetType);
 
 private:
     TTEStreetLoader *streetLoader;

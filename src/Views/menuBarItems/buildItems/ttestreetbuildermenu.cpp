@@ -24,7 +24,7 @@ void TTEStreetBuilderMenu::initButtonConnections()
 void TTEStreetBuilderMenu::createButtonConnection(const QPushButton *button, const STREET_ORIENTATION orientation)
 {
     connect(button, &QPushButton::clicked, this, [this, orientation]() {
-        const TTEStreetType &streetType = streetLoader->getTypeAt(CONCRETE_FANCY, orientation);
+        const TTEStreetType *streetType = streetLoader->getTypePtrAt(CONCRETE_FANCY, orientation);
         emit streetSelected(streetType);
     });
 }
