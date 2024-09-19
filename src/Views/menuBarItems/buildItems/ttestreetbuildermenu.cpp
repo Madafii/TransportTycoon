@@ -11,14 +11,14 @@ TTEStreetBuilderMenu::TTEStreetBuilderMenu(TTEStreetLoader *loader, QWidget *par
 
 void TTEStreetBuilderMenu::initButtonIcons()
 {
-    buttonH->setIcon(QIcon(":/icons/build_rail_iconH.jpg"));
-    buttonV->setIcon(QIcon(":/icons/build_rail_iconV.jpg"));
+    buttonWO->setIcon(QIcon(":/icons/build_rail_iconH.jpg"));
+    buttonSN->setIcon(QIcon(":/icons/build_rail_iconV.jpg"));
 }
 
 void TTEStreetBuilderMenu::initButtonConnections()
 {
-    createButtonConnection(buttonH, HORIZONTAL_STREET);
-    createButtonConnection(buttonV, VERTICAL_STREET);
+    createButtonConnection(buttonWO, HORIZONTAL_STREET);
+    createButtonConnection(buttonSN, VERTICAL_STREET);
 }
 
 void TTEStreetBuilderMenu::createButtonConnection(const QPushButton *button, const STREET_ORIENTATION orientation)

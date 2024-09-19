@@ -33,7 +33,7 @@ void MainWindow::initMainView()
 {
     QGraphicsScene *scene = new QGraphicsScene(this);
     
-    tileMap = new TTEMainViewMap(scene, 100, 100, tileLoader, this);
+    tileMap = new TTEMainViewMap(scene, 1000, 1000, tileLoader, this);
     tileMap->setObjectName("graphicsViewMain");
 
     ui->verticalLayout->addWidget(tileMap);

@@ -13,14 +13,17 @@ TTERailBuilderMenu::TTERailBuilderMenu(TTERailLoader *loader, QWidget *parent)
 
 void TTERailBuilderMenu::initButtonIcons()
 {
-    buttonH->setIcon(QIcon(":/icons/build_rail_iconH.jpg"));
-    buttonV->setIcon(QIcon(":/icons/build_rail_iconV.jpg"));
+    buttonWO->setIcon(QIcon(":/icons/build_rail_iconH.jpg"));
+    buttonSN->setIcon(QIcon(":/icons/build_rail_iconV.jpg"));
+    buttonSW_NO->setIcon(QIcon(":/icons/build_rail_iconH.jpg"));
+    buttonSO_NW->setIcon(QIcon(":/icons/build_rail_iconV.jpg"));
+    buttonDelete->setIcon(QIcon(":/icons/build_rail_iconH.jpg"));
 }
 
 void TTERailBuilderMenu::initButtonConnections()
 {
-    createButtonConnection(buttonH, HORIZONTAL_RAIL);
-    createButtonConnection(buttonV, VERTICAL_RAIL);
+    createButtonConnection(buttonWO, HORIZONTAL_RAIL);
+    createButtonConnection(buttonSN, VERTICAL_RAIL);
 }
 
 void TTERailBuilderMenu::createButtonConnection(const QPushButton *button, const RAIL_ORIENTATION orientation)

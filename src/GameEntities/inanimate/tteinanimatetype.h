@@ -3,6 +3,17 @@
 
 #include <QPixmap>
 
+enum ORIENTATION {
+    ORIENTATION_BEGIN = 0,                           // enumeration begin
+    WO = 0,
+    SN,
+    SW,
+    WN,
+    NO,
+    SO,
+    ORIENTATION_END                      // enumeration end
+};
+
 // a helper class for checking the base without using template params
 class TTEInanimateTypeBase {
 public:

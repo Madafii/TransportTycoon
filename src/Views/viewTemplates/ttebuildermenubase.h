@@ -24,8 +24,7 @@ signals:
 protected:
     QHBoxLayout *layout;
 
-    QPushButton *buttonH;
-    QPushButton *buttonV;
+    QPushButton *buttonWO, *buttonSN, *buttonSW_NO, *buttonSO_NW, *buttonDelete;
 
     void closeEvent(QCloseEvent *event) override;
 
